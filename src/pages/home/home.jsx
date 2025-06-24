@@ -49,7 +49,7 @@ export default function Home() {
 		<>
 			<section className='w-[100%] md:flex items-center justify-around md:mt-[50px] px-[10px]'>
 				<div className='w-[20%] md:block flex flex-col gap-[50px]'>
-					{data.map(el => (
+					{data?.map(el => (
 						<div className='py-[8px]'>
 							<p className='text[18px] text-gray-700 font-medium hover:text-blue-600 hover:underline cursor-pointer transition-all duration-200'>
 								{el.categoryName}
@@ -155,7 +155,7 @@ export default function Home() {
     1024: { slidesPerView: 4 },
   }}
 >
-  {prod.map((el) => (
+  {prod?.map((el) => (
     <SwiperSlide key={el.id}>
       <div className="p-4 border rounded-lg bg-white shadow-md w-[250px] mx-auto">
         <div className="flex justify-between items-center">
@@ -211,7 +211,7 @@ export default function Home() {
 					}}
 					className='w-[95%] mx-auto py-6'
 				>
-				{data.map((item) => (
+				{data?.map((item) => (
 						<SwiperSlide key={item.id}>
 							<div className='bg-white rounded-xl border border-gray-300 shadow-sm flex flex-col items-center justify-center py-4 h-[180px] hover:shadow-md transition'>
 								<img
@@ -291,7 +291,7 @@ export default function Home() {
     1024: { slidesPerView: 4 },
   }}
 >
-  {prod.map((el) => (
+  {prod?.map((el) => (
     <SwiperSlide key={el.id}>
       <div className="p-4 border rounded-lg bg-white shadow-md w-[250px] mx-auto">
         <div className="flex justify-between items-center">

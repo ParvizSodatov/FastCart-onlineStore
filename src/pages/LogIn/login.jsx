@@ -1,7 +1,11 @@
 import { TextField } from '@mui/material'
 import google from '@/assets/Google.png'
 import { Link } from 'react-router'
+import { useState } from 'react'
 export default function LogIn() {
+	const [putName,setPutName]=useState('')
+		const [putPassword,setPutPassword]=useState('')
+
 	return (
 		<>
 				<div className='md:w-[30%] px-[40px] m-auto text-start  md:mt-[100px] mt-[30px]  '>
@@ -12,7 +16,8 @@ export default function LogIn() {
 				<div className='mt-[20px]'>
 					<TextField
 						id='outlined-basic'
-						label='Email or phone number'
+						label='Name'
+						value={putName}
 						className='w-[100%]'
 						variant='outlined'
 						sx={{ mt: '10px' }}

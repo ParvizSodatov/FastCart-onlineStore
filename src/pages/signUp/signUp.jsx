@@ -4,29 +4,34 @@ import google from '@/assets/Google.png'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Regist } from '@/store/reducers/registration/reducer'
-// const navigate=useNavigate()
 export default function SignUp() {
+const navigate=useNavigate()
+
 	const [addName, setAddName] = useState('')
 	const [addPhoneNumber, setAddPhoneNumber] = useState('')
 	const [addEmail, setAddEmail] = useState('')
 	const [addPassword, setAddPassword] = useState('')
 	const [addConfiguePassword, SetAddConfiguePassword] = useState('')
-const dispatch=useDispatch()
-	function handleAdd(){
-		let newAddUser={
-			userName:addName,
-			phoneNumber:addPhoneNumber,
-			email:addEmail,
-			password:addPassword,
-			confirmPassword:addConfiguePassword
+	const dispatch = useDispatch()
+	async function handleAdd() {
+		let newAddUser = {
+			userName: addName,
+			phoneNumber: addPhoneNumber,
+			email: addEmail,
+			password: addPassword,
+			confirmPassword: addConfiguePassword,
 		}
-		dispatch(Regist(newAddUser))
 		setAddName('')
 		setAddPhoneNumber('')
-		setAddEmail('')
+		setAddEmail('')	
 		setAddPassword('')
-		SetAddConfiguePassword()
-
+		SetAddConfiguePassword('')
+		const result = await dispatch(Regist(newAddUser))
+		if (Regist.fulfilled.match(result)) {
+    navigate('/logIn') 
+  } else {
+    console.log('❌ Ошибка при регистрации', result.payload)
+  }
 	}
 	return (
 		<>
@@ -42,7 +47,7 @@ const dispatch=useDispatch()
 						id='outlined-basic'
 						label='Name'
 						value={addName}
-						onChange={(e)=>setAddName(e.target.value)}
+						onChange={e => setAddName(e.target.value)}
 						className='w-[100%]'
 						variant='outlined'
 						sx={{ mt: '10px' }}
@@ -50,7 +55,7 @@ const dispatch=useDispatch()
 					<TextField
 						id='outlined-basic'
 						value={addPhoneNumber}
-						onChange={(e)=>setAddPhoneNumber(e.target.value)}
+						onChange={e => setAddPhoneNumber(e.target.value)}
 						label=' Phone number'
 						className='w-[100%]'
 						variant='outlined'
@@ -60,7 +65,7 @@ const dispatch=useDispatch()
 						id='outlined-basic'
 						label='Email'
 						value={addEmail}
-						onChange={(e)=>setAddEmail(e.target.value)}
+						onChange={e => setAddEmail(e.target.value)}
 						className='w-[100%]'
 						variant='outlined'
 						sx={{ mt: '10px' }}
@@ -73,7 +78,7 @@ const dispatch=useDispatch()
 						sx={{ mt: '10px' }}
 						type='password'
 						value={addPassword}
-						onChange={(e)=>setAddPassword(e.target.value)}
+						onChange={e => setAddPassword(e.target.value)}
 					/>
 					<TextField
 						id='outlined-basic'
@@ -81,11 +86,14 @@ const dispatch=useDispatch()
 						className='w-[100%]'
 						variant='outlined'
 						value={addConfiguePassword}
-						onChange={(e)=>SetAddConfiguePassword(e.target.value)}
+						onChange={e => SetAddConfiguePassword(e.target.value)}
 						sx={{ mt: '10px' }}
 						type='password'
 					/>
-					<button onClick={handleAdd}  className='bg-red-400 text-white w-[100%] h-[7vh] mt-[20px] rounded-[10px]'>
+					<button
+						onClick={handleAdd}
+						className='bg-red-400 text-white w-[100%] h-[7vh] mt-[20px] rounded-[10px]'
+					>
 						Create Account
 					</button>
 					<button className='text-white w-[100%] h-[6vh] mt-[20px] rounded-[10px] flex justify-center items-center border-[1px] border-solid border-black gap-[10px] p-[25px]'>

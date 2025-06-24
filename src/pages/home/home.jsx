@@ -39,7 +39,7 @@ import { get } from '@/store/reducers/categories/reducer'
 import { getProduct } from '@/store/reducers/product/reducer'
 export default function Home() {
 	const { data } = useSelector(store => store.category)
-	const {prod}=useSelector((store)=>store.product)
+	const { prod } = useSelector(store => store.product)
 	const dispatch = useDispatch()
 	useEffect(() => {
 		dispatch(get())
@@ -139,50 +139,53 @@ export default function Home() {
 				</div>
 			</section>
 			<section className='py- px-[10px] mt-[50px] max-w-[1400px] m-auto'>
-			<Swiper
-  modules={[Navigation, Autoplay]}
-  slidesPerView={2.2}
-  spaceBetween={16}
-  navigation
-  loop={true}
-  autoplay={{
-    delay: 3000,
-    disableOnInteraction: false,
-  }}
-  breakpoints={{
-    640: { slidesPerView: 2.5 },
-    768: { slidesPerView: 3 },
-    1024: { slidesPerView: 4 },
-  }}
->
-  {prod?.map((el) => (
-    <SwiperSlide key={el.id}>
-      <div className="p-4 border rounded-lg bg-white shadow-md w-[250px] mx-auto">
-        <div className="flex justify-between items-center">
-          <span className="bg-red-400 text-white px-4 py-1 rounded-lg">-40%</span>
-          <div>
-            <FavoriteBorderIcon />
-            <br />
-            <VisibilityIcon />
-          </div>
-        </div>
-        <div className="flex flex-col items-center">
-          <img
-            src={`http://37.27.29.18:8002/images/${el.image}`}
-            className="h-[150px] w-full object-contain mb-2"
-          />
-          <Button variant="outlined" color="inherit">
-            Add To Card
-          </Button>
-        </div>
-        <h3 className="text-sm font-semibold mt-2">HAVIT HV-G92 Gamepad</h3>
-        <p className="text-red-500 font-bold">$120</p>
-        <p>⭐⭐⭐⭐⭐ (90)</p>
-      </div>
-    </SwiperSlide>
-  ))}
-</Swiper>
-
+				<Swiper
+					modules={[Navigation, Autoplay]}
+					slidesPerView={2.2}
+					spaceBetween={16}
+					navigation
+					loop={true}
+					autoplay={{
+						delay: 3000,
+						disableOnInteraction: false,
+					}}
+					breakpoints={{
+						640: { slidesPerView: 2.5 },
+						768: { slidesPerView: 3 },
+						1024: { slidesPerView: 4 },
+					}}
+				>
+					{prod?.map(el => (
+						<SwiperSlide key={el.id}>
+							<div className='p-4 border rounded-lg bg-white shadow-md w-[250px] mx-auto'>
+								<div className='flex justify-between items-center'>
+									<span className='bg-red-400 text-white px-4 py-1 rounded-lg'>
+										-40%
+									</span>
+									<div>
+										<FavoriteBorderIcon />
+										<br />
+										<VisibilityIcon />
+									</div>
+								</div>
+								<div className='flex flex-col items-center'>
+									<img
+										src={`http://37.27.29.18:8002/images/${el.image}`}
+										className='h-[150px] w-full object-contain mb-2'
+									/>
+									<Button variant='outlined' color='inherit'>
+										Add To Card
+									</Button>
+								</div>
+								<h3 className='text-sm font-semibold mt-2'>
+									HAVIT HV-G92 Gamepad
+								</h3>
+								<p className='text-red-500 font-bold'>$120</p>
+								<p>⭐⭐⭐⭐⭐ (90)</p>
+							</div>
+						</SwiperSlide>
+					))}
+				</Swiper>
 			</section>
 			<div className='flex justify-center mt-[20px]  '>
 				<Link to='/products'>
@@ -211,7 +214,7 @@ export default function Home() {
 					}}
 					className='w-[95%] mx-auto py-6'
 				>
-				{data?.map((item) => (
+					{data?.map(item => (
 						<SwiperSlide key={item.id}>
 							<div className='bg-white rounded-xl border border-gray-300 shadow-sm flex flex-col items-center justify-center py-4 h-[180px] hover:shadow-md transition'>
 								<img
@@ -219,7 +222,9 @@ export default function Home() {
 									alt=''
 									className='h-[70px] object-contain w-[100px]'
 								/>
-								<h1 className='text-[16px] font-semibold mt-3'>{item.categoryName}</h1>
+								<h1 className='text-[16px] font-semibold mt-3'>
+									{item.categoryName}
+								</h1>
 							</div>
 						</SwiperSlide>
 					))}
@@ -274,51 +279,54 @@ export default function Home() {
 				<h1 className='text-red-500 text-[45px] '>This Month</h1>
 				<h1 className='font-bold text-[30px] mt-[10]'>Best Selling Products</h1>
 			</div>
-		<section className='py- px-[10px] mt-[50px] max-w-[1400px] m-auto'>
-			<Swiper
-  modules={[Navigation, Autoplay]}
-  slidesPerView={2.2}
-  spaceBetween={16}
-  navigation
-  loop={true}
-  autoplay={{
-    delay: 3000,
-    disableOnInteraction: false,
-  }}
-  breakpoints={{
-    640: { slidesPerView: 2.5 },
-    768: { slidesPerView: 3 },
-    1024: { slidesPerView: 4 },
-  }}
->
-  {prod?.map((el) => (
-    <SwiperSlide key={el.id}>
-      <div className="p-4 border rounded-lg bg-white shadow-md w-[250px] mx-auto">
-        <div className="flex justify-between items-center">
-          <span className="bg-red-400 text-white px-4 py-1 rounded-lg">-40%</span>
-          <div>
-            <FavoriteBorderIcon />
-            <br />
-            <VisibilityIcon />
-          </div>
-        </div>
-        <div className="flex flex-col items-center">
-          <img
-            src={`http://37.27.29.18:8002/images/${el.image}`}
-            className="h-[150px] w-full object-contain mb-2"
-          />
-          <Button variant="outlined" color="inherit">
-            Add To Card
-          </Button>
-        </div>
-        <h3 className="text-sm font-semibold mt-2">HAVIT HV-G92 Gamepad</h3>
-        <p className="text-red-500 font-bold">$120</p>
-        <p>⭐⭐⭐⭐⭐ (90)</p>
-      </div>
-    </SwiperSlide>
-  ))}
-</Swiper>
-
+			<section className='py- px-[10px] mt-[50px] max-w-[1400px] m-auto'>
+				<Swiper
+					modules={[Navigation, Autoplay]}
+					slidesPerView={2.2}
+					spaceBetween={16}
+					navigation
+					loop={true}
+					autoplay={{
+						delay: 3000,
+						disableOnInteraction: false,
+					}}
+					breakpoints={{
+						640: { slidesPerView: 2.5 },
+						768: { slidesPerView: 3 },
+						1024: { slidesPerView: 4 },
+					}}
+				>
+					{prod?.map(el => (
+						<SwiperSlide key={el.id}>
+							<div className='p-4 border rounded-lg bg-white shadow-md w-[250px] mx-auto'>
+								<div className='flex justify-between items-center'>
+									<span className='bg-red-400 text-white px-4 py-1 rounded-lg'>
+										-40%
+									</span>
+									<div>
+										<FavoriteBorderIcon />
+										<br />
+										<VisibilityIcon />
+									</div>
+								</div>
+								<div className='flex flex-col items-center'>
+									<img
+										src={`http://37.27.29.18:8002/images/${el.image}`}
+										className='h-[150px] w-full object-contain mb-2'
+									/>
+									<Button variant='outlined' color='inherit'>
+										Add To Card
+									</Button>
+								</div>
+								<h3 className='text-sm font-semibold mt-2'>
+									HAVIT HV-G92 Gamepad
+								</h3>
+								<p className='text-red-500 font-bold'>$120</p>
+								<p>⭐⭐⭐⭐⭐ (90)</p>
+							</div>
+						</SwiperSlide>
+					))}
+				</Swiper>
 			</section>
 
 			<section className='flex md:justify-around flex-col md:flex-row items-center bg-black py-[40px] w-[90%] m-auto rounded-[10px] mt-[100px]'>

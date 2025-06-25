@@ -5,9 +5,9 @@ export const Regist = createAsyncThunk(
 	'regist/Regist',
 	async (user,) => {
 		try {
-			await axios.post('http://37.27.29.18:8002/Account/register', user)
-			// navigate('/logIn')
-			// window.location.href = "/login"
+			let res=await axios.post('http://37.27.29.18:8002/Account/register', user)
+			console.log(res);
+			return res.data
 		} catch (error) {
 			console.log(error)
 		}
@@ -15,6 +15,13 @@ export const Regist = createAsyncThunk(
 )
 export const RegistrationStore = createSlice({
 	name: 'regist',
-	initialState: {},
+	initialState: {
+		error:null
+	},
+	extraReducers:(builder)=>{
+			builder.addCase(Regist.rejected,(state,action)=>{
+				state.error=action.payload
+			})
+		}
 })
 export default RegistrationStore.reducer

@@ -177,10 +177,8 @@ export default function Home() {
 										Add To Card
 									</Button>
 								</div>
-								<h3 className='text-sm font-semibold mt-2'>
-									HAVIT HV-G92 Gamepad
-								</h3>
-								<p className='text-red-500 font-bold'>$120</p>
+								<h3 className='text-sm font-semibold mt-2'>{el.productName}</h3>
+								<p className='text-red-500 font-bold'>{el.price}$</p>
 								<p>⭐⭐⭐⭐⭐ (90)</p>
 							</div>
 						</SwiperSlide>
@@ -318,10 +316,8 @@ export default function Home() {
 										Add To Card
 									</Button>
 								</div>
-								<h3 className='text-sm font-semibold mt-2'>
-									HAVIT HV-G92 Gamepad
-								</h3>
-								<p className='text-red-500 font-bold'>$120</p>
+								<h3 className='text-sm font-semibold mt-2'>{el.productName}</h3>
+								<p className='text-red-500 font-bold'>{el.price}</p>
 								<p>⭐⭐⭐⭐⭐ (90)</p>
 							</div>
 						</SwiperSlide>

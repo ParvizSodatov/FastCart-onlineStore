@@ -32,7 +32,7 @@ import fgg from '@/assets/fgg.png'
 import oo from '@/assets/oo.png'
 
 import { Button } from '@mui/material'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { get } from '@/store/reducers/categories/reducer'
@@ -47,6 +47,18 @@ export default function Home() {
 		dispatch(get())
 		dispatch(getProduct())
 	}, [])
+	let navigate = useNavigate()
+
+	function handleAddToCart(id) {
+		const token = localStorage.getItem('token')
+
+		if (!token) {
+			alert('Please registraro or login for adding product to the cart')
+			navigate('/signUp')
+			return
+		}
+		dispatch(addToCart(id))
+	}
 	return (
 		<>
 			<section className='w-[100%] md:flex items-center justify-around md:mt-[50px] px-[10px]'>
@@ -167,7 +179,10 @@ export default function Home() {
 									<div>
 										<FavoriteBorderIcon />
 										<br />
-										<VisibilityIcon />
+										<Link to={'/info/' + el.id}>
+											{' '}
+											<VisibilityIcon />
+										</Link>
 									</div>
 								</div>
 								<div className='flex flex-col items-center'>
@@ -175,7 +190,11 @@ export default function Home() {
 										src={`http://37.27.29.18:8002/images/${el.image}`}
 										className='h-[150px] w-full object-contain mb-2'
 									/>
-									<Button variant='outlined' color='inherit' onClick={()=>dispatch(addToCart(el.id))}>
+									<Button
+										variant='outlined'
+										color='inherit'
+										onClick={() => handleAddToCart(el.id)}
+									>
 										Add To Card
 									</Button>
 								</div>
@@ -353,7 +372,7 @@ export default function Home() {
 				<h1 className='text-[50px]'>Explore Our Products</h1>
 			</div>
 			<section className='py- px-[10px] md:mt-[50px] mt-[50px] md:max-w-[1400px] md:m-auto'>
-				<Swiper
+				{/* <Swiper
 					modules={[Navigation, Autoplay]}
 					slidesPerView={2.2}
 					spaceBetween={16}
@@ -528,11 +547,56 @@ export default function Home() {
 							<p className=''>⭐⭐⭐⭐⭐(75)</p>
 						</div>
 					</SwiperSlide>
+				</Swiper> */}
+					<Swiper
+					modules={[Navigation, Autoplay]}
+					slidesPerView={2.2}
+					spaceBetween={16}
+					navigation
+					loop={true}
+					autoplay={{
+						delay: 3000,
+						disableOnInteraction: false,
+					}}
+					breakpoints={{
+						640: { slidesPerView: 2.5 },
+						768: { slidesPerView: 3 },
+						1024: { slidesPerView: 4 },
+					}}
+				>
+					{prod?.map(el => (
+						<SwiperSlide key={el.id}>
+							<div className='p-4 border rounded-lg bg-white shadow-md w-[250px] mx-auto'>
+								<div className='flex justify-between items-center'>
+									<span className='bg-red-400 text-white px-4 py-1 rounded-lg'>
+										-40%
+									</span>
+									<div>
+										<FavoriteBorderIcon />
+										<br />
+										<VisibilityIcon />
+									</div>
+								</div>
+								<div className='flex flex-col items-center'>
+									<img
+										src={`http://37.27.29.18:8002/images/${el.image}`}
+										className='h-[150px] w-full object-contain mb-2'
+									/>
+									<Button variant='outlined' color='inherit'>
+										Add To Card
+									</Button>
+								</div>
+								<h3 className='text-sm font-semibold mt-2'>{el.productName}</h3>
+								<p className='text-red-500 font-bold'>{el.price}</p>
+								<p>⭐⭐⭐⭐⭐ (90)</p>
+							</div>
+						</SwiperSlide>
+					))}
 				</Swiper>
 			</section>
 
 			<section className='py- px-[10px] md:mt-[50px] mt-[50px] md:max-w-[1400px] md:m-auto'>
-				<Swiper
+				{/* <Swiper
 					modules={[Navigation, Autoplay]}
 					slidesPerView={2.2}
 					spaceBetween={16}
@@ -707,6 +771,51 @@ export default function Home() {
 							<p className=''>⭐⭐⭐⭐⭐(75)</p>
 						</div>
 					</SwiperSlide>
+				</Swiper> */}
+					<Swiper
+					modules={[Navigation, Autoplay]}
+					slidesPerView={2.2}
+					spaceBetween={16}
+					navigation
+					loop={true}
+					autoplay={{
+						delay: 3000,
+						disableOnInteraction: false,
+					}}
+					breakpoints={{
+						640: { slidesPerView: 2.5 },
+						768: { slidesPerView: 3 },
+						1024: { slidesPerView: 4 },
+					}}
+				>
+					{prod?.map(el => (
+						<SwiperSlide key={el.id}>
+							<div className='p-4 border rounded-lg bg-white shadow-md w-[250px] mx-auto'>
+								<div className='flex justify-between items-center'>
+									<span className='bg-red-400 text-white px-4 py-1 rounded-lg'>
+										-40%
+									</span>
+									<div>
+										<FavoriteBorderIcon />
+										<br />
+										<VisibilityIcon />
+									</div>
+								</div>
+								<div className='flex flex-col items-center'>
+									<img
+										src={`http://37.27.29.18:8002/images/${el.image}`}
+										className='h-[150px] w-full object-contain mb-2'
+									/>
+									<Button variant='outlined' color='inherit'>
+										Add To Card
+									</Button>
+								</div>
+								<h3 className=	'text-sm font-semibold mt-2'>{el.productName}</h3>
+								<p className='text-red-500 font-bold'>{el.price}</p>
+								<p>⭐⭐⭐⭐⭐ (90)</p>
+							</div>
+						</SwiperSlide>
+					))}
 				</Swiper>
 			</section>
 			<div className='flex justify-center mt-[20px]  '>
@@ -736,8 +845,7 @@ export default function Home() {
 				<img className='m-auto mt-[40px]' src={oo} alt='' />
 				<img className='m-auto mt-[40px]' src={oo} alt='' />
 			</section>
-			 <Toaster position="top-right" richColors />
-			 
+			<Toaster position='top-right' richColors />
 		</>
 	)
 }

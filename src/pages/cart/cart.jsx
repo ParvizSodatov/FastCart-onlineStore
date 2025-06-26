@@ -25,7 +25,7 @@ export default function Cart() {
 							<img className='w-[100px]' src={`http://37.27.29.18:8002/images/${el.product.image}`} alt='' />
 							<h1>{el.product.productName}</h1>
 						</div>
-						{/* <p className='md:block hidden'>{}</p> */}
+						<p className='md:block hidden'></p>
 						<input
 							type='number'
 							name=''

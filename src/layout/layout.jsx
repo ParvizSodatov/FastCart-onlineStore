@@ -88,16 +88,19 @@ export default function Layout() {
 							<FavoriteBorderIcon />
 						</Link>
 					</div>
-					<div>
-						<Link to='/cart'>
-							<h1 className='w-[50px],h-[50px] bg-red-500 text-center text-white rounded-[50px] mt-[-20px] ml-[8px]'>
-								{cart?.productsInCart?.length}
-							</h1>
-							<ShoppingCartIcon
-								style={{ fontSize: '30px', marginTop: '-1px' }}
-							/>
-						</Link>
-					</div>
+					<div className='relative'>
+  <Link to='/cart'>
+    {/* Значок корзины */}
+    <ShoppingCartIcon style={{ fontSize: '30px' }} />
+
+    {/* Бейдж с количеством — только если товары есть */}
+    {cart?.productsInCart?.length > 0 && (
+      <span className='absolute -top-2 -right-2 bg-red-500 text-white text-[12px] font-semibold rounded-full w-[20px] h-[20px] flex items-center justify-center shadow-md'>
+        {cart.productsInCart.length}
+      </span>
+    )}
+  </Link>
+</div>
 
 					<div className='md:block hidden'>
 						<Link to='/acount'>

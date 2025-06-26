@@ -57,7 +57,7 @@ export default function App() {
 					element: <Wishlist/>,
 				},
 					{
-					path: '/info',
+					path: '/info/:id',
 					element: <Info/>,
 				},
 				{

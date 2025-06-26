@@ -37,6 +37,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { get } from '@/store/reducers/categories/reducer'
 import { getProduct } from '@/store/reducers/product/reducer'
+import { addToCart } from '@/store/reducers/cartslice/reducer'
 export default function Home() {
 	const { data } = useSelector(store => store.category)
 	const { prod } = useSelector(store => store.product)
@@ -173,7 +174,7 @@ export default function Home() {
 										src={`http://37.27.29.18:8002/images/${el.image}`}
 										className='h-[150px] w-full object-contain mb-2'
 									/>
-									<Button variant='outlined' color='inherit'>
+									<Button variant='outlined' color='inherit' onClick={()=>dispatch(addToCart(el.id))}>
 										Add To Card
 									</Button>
 								</div>

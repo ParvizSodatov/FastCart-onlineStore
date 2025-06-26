@@ -9,9 +9,13 @@ import TwitterIcon from '@mui/icons-material/Twitter'
 import FacebookIcon from '@mui/icons-material/Facebook'
 import { useState } from 'react'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import { useSelector } from 'react-redux'
 export default function Layout() {
 	const [anchorEl, setAnchorEl] = useState(null)
 	const open = Boolean(anchorEl)
+	const { cart } = useSelector(store => store.cart)
+	console.log(cart);
+
 	const handleClick = event => {
 		setAnchorEl(event.currentTarget)
 	}
@@ -20,7 +24,7 @@ export default function Layout() {
 	}
 	return (
 		<>
-			<nav className='flex md:justify-around items-center mt-[10px]'>
+			<nav className='flex md:justify-around items-center mt-[15px]'>
 				<div className='flex items-center md:hidden ml-[20px] gap-[10px]'>
 					<div>
 						<Button
@@ -53,7 +57,7 @@ export default function Layout() {
 							<Link to='/signUp'>
 								<MenuItem onClick={handleClose}>SignUp</MenuItem>
 							</Link>
-								<Link to='/about'>
+							<Link to='/about'>
 								<MenuItem onClick={handleClose}>About</MenuItem>
 							</Link>
 						</Menu>
@@ -84,9 +88,17 @@ export default function Layout() {
 							<FavoriteBorderIcon />
 						</Link>
 					</div>
-					<Link to='/cart'>
-						<ShoppingCartIcon style={{ fontSize: '35px' }} />
-					</Link>
+					<div>
+						<Link to='/cart'>
+							<h1 className='w-[50px],h-[50px] bg-red-500 text-center text-white rounded-[50px] mt-[-20px] ml-[8px]'>
+								{cart?.productsInCart?.length}
+							</h1>
+							<ShoppingCartIcon
+								style={{ fontSize: '30px', marginTop: '-1px' }}
+							/>
+						</Link>
+					</div>
+
 					<div className='md:block hidden'>
 						<Link to='/acount'>
 							<AccountCircleIcon style={{ fontSize: '35px' }} />

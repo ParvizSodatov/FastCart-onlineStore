@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { toast } from 'sonner'
 
 export const getCart = createAsyncThunk('cart/getCart', async () => {
 	const token = localStorage.getItem('token')
@@ -12,21 +13,23 @@ export const getCart = createAsyncThunk('cart/getCart', async () => {
 
 	return data.data[0]
 })
+export const addToCart = createAsyncThunk("cart/addToCart", async (id,{dispatch}) => {
+   const token = localStorage.getItem("token");
+ try {
+   await axios.post(
+    `http://37.27.29.18:8002/Cart/add-product-to-cart?id=${id}`,{},
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  )
+  dispatch(getCart())
+    toast.success('Успешно добавлено')
+ } catch (error) {
+  console.log(error);
+  toast.info('Уже в карзине!')
+ }
+});
 
-export const addToCart = createAsyncThunk(
-	'cart/addToCart',
-	async (id, { dispatch }) => {
-		const token = localStorage.getItem('token')
-		await axios.post(
-			`http://37.27.29.18:8002/Cart/add-product-to-cart?id=${id}`,
-			{},
-			{
-				headers: { Authorization: `Bearer ${token}` },
-			}
-		)
-		dispatch(getCart())
-	}
-)
 export const deletFromCart = createAsyncThunk(
 	'cart/deletFromCart',
 	async (id, { dispatch }) => {
@@ -46,12 +49,14 @@ export const deletFromCart = createAsyncThunk(
 )
 
 
+
 export const clearCart = createAsyncThunk(
 	'cart/clearCart',
 	async (_,{ dispatch }) => {
 		try {
 			const token = localStorage.getItem('token')
       console.log(token);
+
 			await axios.delete(
 				"http://37.27.29.18:8002/Cart/clear-cart",
         {

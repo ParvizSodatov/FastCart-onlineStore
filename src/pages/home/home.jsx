@@ -38,6 +38,7 @@ import { useEffect } from 'react'
 import { get } from '@/store/reducers/categories/reducer'
 import { getProduct } from '@/store/reducers/product/reducer'
 import { addToCart } from '@/store/reducers/cartslice/reducer'
+import { Toaster } from 'sonner'
 export default function Home() {
 	const { data } = useSelector(store => store.category)
 	const { prod } = useSelector(store => store.product)
@@ -735,6 +736,8 @@ export default function Home() {
 				<img className='m-auto mt-[40px]' src={oo} alt='' />
 				<img className='m-auto mt-[40px]' src={oo} alt='' />
 			</section>
+			 <Toaster position="top-right" richColors />
+			 
 		</>
 	)
 }

@@ -1,16 +1,25 @@
-import { getUserProfileByid } from '@/store/reducers/acount/reducer'
+// import { getUserProfileByid } from '@/store/reducers/acount/reducer'
+import { getToken } from '@/utils/token'
 import { TextField } from '@mui/material'
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+// import { useEffect, useState } from 'react'
+// import { useDispatch, useSelector } from 'react-redux'
+const token =localStorage.getItem('token')
+let decoded=null
+if(typeof token==='string'&& token.trim()!=''){
+  try {
+    decoded=getToken()
+  } catch (error) {
+    console.log(error);
+  }
+}
+else{
+  console.error('Token не найден');
 
+}
 
 export default function Acount(){
-  const dispatch = useDispatch()
-  const {user}=useSelector((store)=>store.acount)
-  console.log(user);
-  useEffect(()=>{
-    dispatch(getUserProfileByid())
-  },[])
+ 
+ 
 	return <>
 	<h1  className='text-[30px] ml-[100px] mt-[40px]'><span className='text-gray-400'>Home /</span>Acount</h1>
 <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-md mt-10"> <h2 className="text-xl font-semibold text-red-500 mb-4">Profile</h2> <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"> <input
@@ -18,7 +27,7 @@ type="text"
 placeholder="First name"
 className="border p-2 rounded w-full"
 // defaultValue="Parviz"
-// value={user.userName}
+value={decoded?.name}
 /> <input
 type="text"
 placeholder="Last name"
@@ -29,7 +38,7 @@ type="email"
 placeholder="Email address"
 className="border p-2 rounded w-full"
 // defaultValue="sodatov0705@gmail.com"
-// value={user.email}
+value={decoded?.email}
 /> <input
 type="text"
 placeholder="Street address"

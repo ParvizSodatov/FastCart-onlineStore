@@ -220,13 +220,14 @@ export default function Home() {
 					))}
 				</Swiper>
 			</section>
-			<div className='flex justify-center mt-[20px]  '>
-				<Link to='/products'>
-					<button className='bg-red-400 text-white px-[80px] text-[20px] py-[9px] mt-[20px]'>
-						View All Products
-					</button>
-				</Link>
-			</div>
+					<div className='flex justify-center mt-[100px]'>
+  <Link to='/products'>
+    <button className='relative overflow-hidden group bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold text-[18px] px-[60px] py-[12px]  shadow-lg hover:shadow-2xl transition duration-300'>
+      <span className='absolute inset-0 bg-white opacity-10 group-hover:opacity-20 transition duration-300'></span>
+      View All Products
+    </button>
+  </Link>
+</div>
 			<section className='mt-[60px] max-w-[1400px] m-auto'>
 				<Swiper
 					modules={[Navigation, Autoplay]}
@@ -313,7 +314,7 @@ export default function Home() {
 				<h1 className='font-bold text-[30px] mt-[10]'>Best Selling Products</h1>
 			</div>
 			<section className='py- px-[10px] mt-[50px] max-w-[1400px] m-auto'>
-				<Swiper
+				{/* <Swiper
 					modules={[Navigation, Autoplay]}
 					slidesPerView={2.2}
 					spaceBetween={16}
@@ -353,6 +354,60 @@ export default function Home() {
 								</div>
 								<h3 className='text-sm font-semibold mt-2'>{el.productName}</h3>
 								<p className='text-red-500 font-bold'>{el.price}</p>
+								<p>⭐⭐⭐⭐⭐ (90)</p>
+							</div>
+						</SwiperSlide>
+					))}
+				</Swiper> */}
+				<Swiper
+					modules={[Navigation, Autoplay]}
+					slidesPerView={2.2}
+					spaceBetween={16}
+					navigation
+					loop={true}
+					autoplay={{
+						delay: 3000,
+						disableOnInteraction: false,
+					}}
+					breakpoints={{
+						640: { slidesPerView: 2.5 },
+						768: { slidesPerView: 3 },
+						1024: { slidesPerView: 4 },
+					}}
+				>
+					{prod?.map(el => (
+						<SwiperSlide key={el.id}>
+							<div className='p-4 border rounded-lg bg-white shadow-md w-[250px] mx-auto'>
+								<div className='flex justify-between items-center'>
+									<span className='bg-red-400 text-white px-4 py-1 rounded-lg'>
+										-40%
+									</span>
+									<div>
+										<FavoriteBorderIcon
+											onClick={() => handleAddToWishList(el)}
+										/>
+										<br />
+										<Link to={'/info/' + el.id}>
+											{' '}
+											<VisibilityIcon />
+										</Link>
+									</div>
+								</div>
+								<div className='flex flex-col items-center'>
+									<img
+										src={`http://37.27.29.18:8002/images/${el.image}`}
+										className='h-[150px] w-full object-contain mb-2'
+									/>
+									<Button
+										variant='outlined'
+										color='inherit'
+										onClick={() => handleAddToCart(el.id)}
+									>
+										Add To Card
+									</Button>
+								</div>
+								<h3 className='text-sm font-semibold mt-2'>{el.productName}</h3>
+								<p className='text-red-500 font-bold'>{el.price}$</p>
 								<p>⭐⭐⭐⭐⭐ (90)</p>
 							</div>
 						</SwiperSlide>
@@ -562,7 +617,7 @@ export default function Home() {
 						</div>
 					</SwiperSlide>
 				</Swiper> */}
-				<Swiper
+				{/* <Swiper
 					modules={[Navigation, Autoplay]}
 					slidesPerView={2.2}
 					spaceBetween={16}
@@ -602,6 +657,60 @@ export default function Home() {
 								</div>
 								<h3 className='text-sm font-semibold mt-2'>{el.productName}</h3>
 								<p className='text-red-500 font-bold'>{el.price}</p>
+								<p>⭐⭐⭐⭐⭐ (90)</p>
+							</div>
+						</SwiperSlide>
+					))}
+				</Swiper> */}
+				<Swiper
+					modules={[Navigation, Autoplay]}
+					slidesPerView={2.2}
+					spaceBetween={16}
+					navigation
+					loop={true}
+					autoplay={{
+						delay: 3000,
+						disableOnInteraction: false,
+					}}
+					breakpoints={{
+						640: { slidesPerView: 2.5 },
+						768: { slidesPerView: 3 },
+						1024: { slidesPerView: 4 },
+					}}
+				>
+					{prod?.map(el => (
+						<SwiperSlide key={el.id}>
+							<div className='p-4 border rounded-lg bg-white shadow-md w-[250px] mx-auto'>
+								<div className='flex justify-between items-center'>
+									<span className='bg-red-400 text-white px-4 py-1 rounded-lg'>
+										-900%
+									</span>
+									<div>
+										<FavoriteBorderIcon
+											onClick={() => handleAddToWishList(el)}
+										/>
+										<br />
+										<Link to={'/info/' + el.id}>
+											{' '}
+											<VisibilityIcon />
+										</Link>
+									</div>
+								</div>
+								<div className='flex flex-col items-center'>
+									<img
+										src={`http://37.27.29.18:8002/images/${el.image}`}
+										className='h-[150px] w-full object-contain mb-2'
+									/>
+									<Button
+										variant='outlined'
+										color='inherit'
+										onClick={() => handleAddToCart(el.id)}
+									>
+										Add To Card
+									</Button>
+								</div>
+								<h3 className='text-sm font-semibold mt-2'>{el.productName}</h3>
+								<p className='text-red-500 font-bold'>{el.price}$</p>
 								<p>⭐⭐⭐⭐⭐ (90)</p>
 							</div>
 						</SwiperSlide>
@@ -786,7 +895,7 @@ export default function Home() {
 						</div>
 					</SwiperSlide>
 				</Swiper> */}
-				<Swiper
+				{/* <Swiper
 					modules={[Navigation, Autoplay]}
 					slidesPerView={2.2}
 					spaceBetween={16}
@@ -830,15 +939,71 @@ export default function Home() {
 							</div>
 						</SwiperSlide>
 					))}
+				</Swiper> */}
+				<Swiper
+					modules={[Navigation, Autoplay]}
+					slidesPerView={2.2}
+					spaceBetween={16}
+					navigation
+					loop={true}
+					autoplay={{
+						delay: 3000,
+						disableOnInteraction: false,
+					}}
+					breakpoints={{
+						640: { slidesPerView: 2.5 },
+						768: { slidesPerView: 3 },
+						1024: { slidesPerView: 4 },
+					}}
+				>
+					{prod?.map(el => (
+						<SwiperSlide key={el.id}>
+							<div className='p-4 border rounded-lg bg-white shadow-md w-[250px] mx-auto'>
+								<div className='flex justify-between items-center'>
+									<span className='bg-red-400 text-white px-4 py-1 rounded-lg'>
+										-40%
+									</span>
+									<div>
+										<FavoriteBorderIcon
+											onClick={() => handleAddToWishList(el)}
+										/>
+										<br />
+										<Link to={'/info/' + el.id}>
+											{' '}
+											<VisibilityIcon />
+										</Link>
+									</div>
+								</div>
+								<div className='flex flex-col items-center'>
+									<img
+										src={`http://37.27.29.18:8002/images/${el.image}`}
+										className='h-[150px] w-full object-contain mb-2'
+									/>
+									<Button
+										variant='outlined'
+										color='inherit'
+										onClick={() => handleAddToCart(el.id)}
+									>
+										Add To Card
+									</Button>
+								</div>
+								<h3 className='text-sm font-semibold mt-2'>{el.productName}</h3>
+								<p className='text-red-500 font-bold'>{el.price}$</p>
+								<p>⭐⭐⭐⭐⭐ (90)</p>
+							</div>
+						</SwiperSlide>
+					))}
 				</Swiper>
 			</section>
-			<div className='flex justify-center mt-[20px]  '>
-				<Link to='/products'>
-					<button className='bg-red-400 text-white px-[80px] text-[20px] py-[9px] mt-[20px]'>
-						View All Products
-					</button>
-				</Link>
-			</div>
+			<div className='flex justify-center mt-[100px]'>
+  <Link to='/products'>
+    <button className='relative overflow-hidden group bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold text-[18px] px-[60px] py-[12px]  shadow-lg hover:shadow-2xl transition duration-300'>
+      <span className='absolute inset-0 bg-white opacity-10 group-hover:opacity-20 transition duration-300'></span>
+      View All Products
+    </button>
+  </Link>
+</div>
+
 			<div className='ml-[140px] mt-[40px] hidden md:block'>
 				<h1 className='text-red-400 text-[20px] font-bold'>Featured</h1>
 				<h1 className='text-[50px]'>New Arrival</h1>

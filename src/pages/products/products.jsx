@@ -15,17 +15,29 @@ import Typography from '@mui/material/Typography'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Button from '@mui/material/Button'
 import keyboard from '@/assets/keyboard.png'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { API } from '@/utils/config'
+import { addToCart } from '@/store/reducers/cartslice/reducer'
+import { Toaster } from 'sonner'
 
 export default function Products() {
 	const [age, setAge] = useState('')
-
+const dispatch=useDispatch()
 	const handleChange = event => {
 		setAge(event.target.value)
 	}
 
 	const { prod } = useSelector(store => store.product)
+	function handleAddToCart(id) {
+			const token = localStorage.getItem('token')
+	
+			if (!token) {
+				alert('Please registraro or login for adding product to the cart')
+				navigate('/signUp')
+				return
+			}
+			dispatch(addToCart(id))
+		}
 	return (
 		<>
 			<div className='flex justify-around items-center mt-[50px]'>
@@ -250,6 +262,13 @@ export default function Products() {
 									src={`${API}/images/${el.image}`}
 									className='h-[150px] w-full object-contain mb-2'
 								/>
+									<Button
+										variant='outlined'
+										color='inherit'
+										onClick={() => handleAddToCart(el.id)}
+									>
+										Add To Card
+									</Button>
 							</div>
 							<h3 className='text-sm font-semibold mt-[10px]'>
 								
@@ -404,6 +423,7 @@ export default function Products() {
 						</div> */}
 				</aside>
 			</section>
+			<Toaster position='top-right' richColors />
 		</>
 	)
 }

@@ -17,9 +17,10 @@ export default function LogIn() {
 		}
 		const result=await dispatch(Login(newLogin))
 		if(Login.fulfilled.match(result)){
-			setTimeout(() => {
+			
         navigate('/')
-      }, 0)
+		  localStorage.setItem('wish',JSON.stringify([]))
+     
 		}
 	}
 	return (

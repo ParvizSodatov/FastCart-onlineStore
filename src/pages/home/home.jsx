@@ -48,6 +48,18 @@ export default function Home() {
 		dispatch(getProduct())
 	}, [])
 	let navigate = useNavigate()
+	const wish = JSON.parse(localStorage.getItem('wish'))
+	function handleAddToWishList(prod) {
+		let product = {
+			id: prod.id,
+			productName: prod.productName,
+			image: prod.image,
+			price: prod.price,
+			categoryName: prod.categoryName,
+		}
+		wish.push(product)
+		localStorage.setItem('wish', JSON.stringify(wish))
+	}
 
 	function handleAddToCart(id) {
 		const token = localStorage.getItem('token')
@@ -177,7 +189,9 @@ export default function Home() {
 										-40%
 									</span>
 									<div>
-										<FavoriteBorderIcon />
+										<FavoriteBorderIcon
+											onClick={() => handleAddToWishList(el)}
+										/>
 										<br />
 										<Link to={'/info/' + el.id}>
 											{' '}
@@ -548,7 +562,7 @@ export default function Home() {
 						</div>
 					</SwiperSlide>
 				</Swiper> */}
-					<Swiper
+				<Swiper
 					modules={[Navigation, Autoplay]}
 					slidesPerView={2.2}
 					spaceBetween={16}
@@ -772,7 +786,7 @@ export default function Home() {
 						</div>
 					</SwiperSlide>
 				</Swiper> */}
-					<Swiper
+				<Swiper
 					modules={[Navigation, Autoplay]}
 					slidesPerView={2.2}
 					spaceBetween={16}
@@ -810,7 +824,7 @@ export default function Home() {
 										Add To Card
 									</Button>
 								</div>
-								<h3 className=	'text-sm font-semibold mt-2'>{el.productName}</h3>
+								<h3 className='text-sm font-semibold mt-2'>{el.productName}</h3>
 								<p className='text-red-500 font-bold'>{el.price}</p>
 								<p>⭐⭐⭐⭐⭐ (90)</p>
 							</div>

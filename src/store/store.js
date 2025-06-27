@@ -17,4 +17,5 @@ export const store = configureStore({
 		productById: productByidSlice,
 		// acount:userProfileSlice
 	},
+	
 })

@@ -57,9 +57,13 @@ export default function LogIn() {
 					<button className='bg-white text-red-400 w-[100%] h-[2vh] mt-[20px] rounded-[10px]'>
 						Forget Password?
 					</button>
-					<button onClick={handleLogin} className='bg-red-400 text-white w-[100%] h-[7vh] mt-[20px] rounded-[10px]'>
-						Log In
-					</button>
+				<button
+  onClick={handleLogin}
+  className="bg-red-400 text-white w-[100%] h-[7vh] mt-[20px] rounded-[10px] hover:bg-red-600 transition-colors duration-300"
+>
+  Log In
+</button>
+
 				</div>
 			</div>
 		</>

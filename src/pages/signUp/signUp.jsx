@@ -91,16 +91,25 @@ export default function SignUp() {
           variant="outlined"
           sx={{ mt: '10px' }}
         />
-        <button
-          onClick={handleAdd}
-          className="bg-red-400 text-white w-[100%] h-[7vh] mt-[20px] rounded-[10px]"
-        >
-          Create Account
-        </button>
-        <button className="text-white w-[100%] h-[6vh] mt-[20px] rounded-[10px] flex justify-center items-center border-[1px] border-solid border-black gap-[10px] p-[25px]">
-          <img src={google} alt="" />
-          <p className="text-black">Sign up with Google</p>
-        </button>
+       <button
+  onClick={handleAdd}
+  className="bg-red-400 text-white w-[100%] h-[7vh] mt-[20px] rounded-[10px] hover:bg-red-600 transition-colors duration-300"
+>
+  Create Account
+</button>
+
+      <button
+  className="text-black w-[100%] h-[6vh] mt-[20px] rounded-[10px] flex justify-center items-center border border-black gap-[10px] p-[25px] bg-white
+             hover:bg-blue-300 hover:text-white transition-all duration-300"
+>
+  <img
+    src={google}
+    alt="Google icon"
+    className="w-[20px] h-[20px] object-contain transition-transform duration-300 hover:scale-110"
+  />
+  <p>Sign up with Google</p>
+</button>
+
       </div>
 
       <div className="text-center mt-[20px] flex justify-center gap-[10px]">

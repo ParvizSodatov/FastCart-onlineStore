@@ -74,7 +74,7 @@ export default function Home() {
 	return (
 		<>
 			<section className='w-[100%] md:flex items-center justify-around md:mt-[50px] px-[10px]'>
-				<div className='w-[20%] md:block flex flex-col gap-[50px]'>
+				<div className='w-[20%] md:block hidden flex flex-col gap-[50px]'>
 					{data?.map(el => (
 						<div className='py-[8px]'>
 							<p className='text[18px] text-gray-700 font-medium hover:text-blue-600 hover:underline cursor-pointer transition-all duration-200'>
@@ -83,11 +83,22 @@ export default function Home() {
 						</div>
 					))}
 				</div>
-				<div className='border-[1px] border-solid border-black md:hidden  flex justify-between p-[10px] rounded-[10px]'>
+				<div className='flex md:hidden overflow-x-auto whitespace-nowrap gap-2 px-2 mt-2'>
+          {data?.map(el => (
+            <span
+              key={el.id}
+              className='inline-block bg-gray-300 text-[16px] px-3 py-2 rounded cursor-pointer'
+              title={el.categoryName}
+            >
+              {el.categoryName}
+            </span>
+          ))}
+        </div>
+				<div className='border-[1px] border-solid border-black md:hidden  flex justify-between p-[10px] rounded-[10px] mt-[20px]'>
 					<input type='text' placeholder='Search' />
 					<SearchIcon />
 				</div>
-				<div className='flex flex-wrap gap-[10px] mt-[10px] md:hidden'>
+				{/* <div className='flex flex-wrap gap-[10px] mt-[10px] md:hidden'>
 					<span className='bg-gray-300 text-[20px] px-[10px] py-[10px]'>
 						Woman’s Fashion <ArrowForwardIosIcon />
 					</span>
@@ -115,7 +126,7 @@ export default function Home() {
 					<span className='bg-gray-300 text-[20px] px-[10px] py-[10px]'>
 						Health & Beauty
 					</span>
-				</div>
+				</div> */}
 
 				<div className=' max-w-[900px]  px-[5px] md:px-0 mt-[10px]'>
 					<Swiper

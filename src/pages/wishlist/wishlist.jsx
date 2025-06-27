@@ -6,6 +6,7 @@ import { Toaster } from 'sonner'
 
 export default function Wishlist() {
   let product = JSON.parse(localStorage.getItem('wish')) || []
+
   console.log('Wishlist:', product)
   const dispatch = useDispatch()
 

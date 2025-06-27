@@ -6,7 +6,7 @@ import {
 	Select,
 	TextField,
 } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Accordion from '@mui/material/Accordion'
 import AccordionActions from '@mui/material/AccordionActions'
 import AccordionSummary from '@mui/material/AccordionSummary'
@@ -19,25 +19,30 @@ import { useDispatch, useSelector } from 'react-redux'
 import { API } from '@/utils/config'
 import { addToCart } from '@/store/reducers/cartslice/reducer'
 import { Toaster } from 'sonner'
+import { get } from '@/store/reducers/categories/reducer'
 
 export default function Products() {
 	const [age, setAge] = useState('')
-const dispatch=useDispatch()
+	const dispatch = useDispatch()
 	const handleChange = event => {
 		setAge(event.target.value)
 	}
 
 	const { prod } = useSelector(store => store.product)
+	const { data } = useSelector(store => store.category)
 	function handleAddToCart(id) {
-			const token = localStorage.getItem('token')
-	
-			if (!token) {
-				alert('Please registraro or login for adding product to the cart')
-				navigate('/signUp')
-				return
-			}
-			dispatch(addToCart(id))
+		const token = localStorage.getItem('token')
+
+		if (!token) {
+			alert('Please registraro or login for adding product to the cart')
+			navigate('/signUp')
+			return
 		}
+		dispatch(addToCart(id))
+	}
+	useEffect(() => {
+		dispatch(get())
+	}, [])
 	return (
 		<>
 			<div className='flex justify-around items-center mt-[50px]'>
@@ -76,12 +81,12 @@ const dispatch=useDispatch()
 								</Typography>
 							</AccordionSummary>
 							<AccordionDetails>
-								<ul className='flex flex-col gap-[30px]'>
-									<li>All products</li>
-									<li>Electronics</li>
-									<li>Home & Lifestyle</li>
-									<li className='text-[#DB4444]'>See all</li>
-								</ul>
+								{data?.map(el => (
+									<ul className='flex flex-col gap-[36px]'>
+									<li>{el.categoryName}</li>
+									<li></li>
+								</ul> 
+								))}
 							</AccordionDetails>
 						</Accordion>
 						<Accordion>
@@ -262,22 +267,18 @@ const dispatch=useDispatch()
 									src={`${API}/images/${el.image}`}
 									className='h-[150px] w-full object-contain mb-2'
 								/>
-									<Button
-										variant='outlined'
-										color='inherit'
-										onClick={() => handleAddToCart(el.id)}
-									>
-										Add To Card
-									</Button>
+								<Button
+									variant='outlined'
+									color='inherit'
+									onClick={() => handleAddToCart(el.id)}
+								>
+									Add To Card
+								</Button>
 							</div>
-							<h3 className='text-sm font-semibold mt-[10px]'>
-								
-							</h3>
+							<h3 className='text-sm font-semibold mt-[10px]'></h3>
 							<p className='text-red-500 font-bold'>{el.price}$</p>
 							<p className=''>⭐⭐⭐⭐⭐(75)</p>
 						</div>
-						
-						
 					))}
 
 					{/* <div className='p-4 border rounded-lg bg-white shadow-md max-h-96 w-[300px]'>

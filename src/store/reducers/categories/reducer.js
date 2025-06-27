@@ -1,9 +1,11 @@
+import { axiosRequest } from '@/utils/axios'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+
 export const get = createAsyncThunk('category/get', async () => {
 	try {
-		let { data } = await axios.get(
-			'http://37.27.29.18:8002/Category/get-categories'
+		let { data } = await axiosRequest.get(
+			'/Category/get-categories'
 		)
 		return data.data
 	} catch (error) {

@@ -19,7 +19,6 @@ export default function Cart() {
 					Home/ <span className='text-black'>Cart</span>
 				</h2>
 			</div>
-
 			<section className='max-w-[1200px] mx-auto px-4 mt-8'>
 				{/* Товары */}
 				{cart.productsInCart?.length === 0 && (

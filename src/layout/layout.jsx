@@ -10,11 +10,12 @@ import FacebookIcon from '@mui/icons-material/Facebook'
 import { useState } from 'react'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import { useSelector } from 'react-redux'
+
 export default function Layout() {
 	const [anchorEl, setAnchorEl] = useState(null)
 	const open = Boolean(anchorEl)
 	const { cart } = useSelector(store => store.cart)
-	console.log(cart);
+	const product = JSON.parse(localStorage.getItem('wish'))
 
 	const handleClick = event => {
 		setAnchorEl(event.currentTarget)
@@ -22,6 +23,7 @@ export default function Layout() {
 	const handleClose = () => {
 		setAnchorEl(null)
 	}
+
 	return (
 		<>
 			<nav className='flex md:justify-around items-center mt-[15px]'>
@@ -51,7 +53,6 @@ export default function Layout() {
 								<MenuItem onClick={handleClose}>Home</MenuItem>
 							</Link>
 							<Link to='/acount'>
-								{' '}
 								<MenuItem onClick={handleClose}>My account</MenuItem>
 							</Link>
 							<Link to='/signUp'>
@@ -64,44 +65,68 @@ export default function Layout() {
 					</div>
 					<h1 className='text-[35px]'>Exclusive</h1>
 				</div>
-				<img className='h-[7vh] md:block hidden' src={logo} alt='' />
-				<div className=' md:flex justify-center gap-[30px] hidden  '>
+
+				<img className='h-[7vh] md:block hidden' src={logo} alt='logo' />
+
+				<div className='md:flex justify-center gap-[30px] hidden'>
 					<p className='text-[20px] '>
 						<Link to='/'>Home</Link>
 					</p>
 					<p className='text-[20px] '>
-						<Link to='/about'>about</Link>
+						<Link to='/about'>About</Link>
 					</p>
 					<p className='text-[20px]'>
 						<Link to='/contact'>Contact</Link>
 					</p>
 					<p className='text-[20px]'>
-						<Link to='/signUp'>signUp</Link>
+						<Link to='/signUp'>SignUp</Link>
 					</p>
 				</div>
-				<div className='flex items-center justify-center gap-[10px]  w-[300px]'>
+
+				<div className='flex items-center justify-center gap-[10px] w-[300px]'>
+
+					{/* 🔍 Поиск */}
 					<div className='md:block hidden'>
-						<TextField className='' label='search.....' variant='standard' />
+						<TextField label='search.....' variant='standard' />
 					</div>
-					<div className='md:block hidden'>
+
+					{/* ❤️ Wishlist – Десктоп */}
+					<div className='relative md:block hidden'>
 						<Link to='/wishlist'>
-							<FavoriteBorderIcon />
+							<FavoriteBorderIcon style={{ fontSize: '30px' }} />
+							{product != '' && product != null && product.length > 0 && (
+								<span className='absolute -top-2 -right-2 bg-red-500 text-white text-[12px] font-semibold rounded-full w-[20px] h-[20px] flex items-center justify-center shadow-md'>
+									{product.length}
+								</span>
+							)}
 						</Link>
 					</div>
+
+					{/* ❤️ Wishlist – Мобилка */}
+					<div className='relative md:hidden'>
+						<Link to='/wishlist'>
+							<FavoriteBorderIcon style={{ fontSize: '30px' }} />
+							{product != '' && product != null && product.length > 0 && (
+								<span className='absolute -top-2 -right-2 bg-red-500 text-white text-[12px] font-semibold rounded-full w-[20px] h-[20px] flex items-center justify-center shadow-md'>
+									{product.length}
+								</span>
+							)}
+						</Link>
+					</div>
+
+					{/* 🛒 Корзина */}
 					<div className='relative'>
-  <Link to='/cart'>
-    {/* Значок корзины */}
-    <ShoppingCartIcon style={{ fontSize: '30px' }} />
+						<Link to='/cart'>
+							<ShoppingCartIcon style={{ fontSize: '30px' }} />
+							{cart?.productsInCart?.length > 0 && (
+								<span className='absolute -top-2 -right-2 bg-red-500 text-white text-[12px] font-semibold rounded-full w-[20px] h-[20px] flex items-center justify-center shadow-md'>
+									{cart.productsInCart.length}
+								</span>
+							)}
+						</Link>
+					</div>
 
-    {/* Бейдж с количеством — только если товары есть */}
-    {cart?.productsInCart?.length > 0 && (
-      <span className='absolute -top-2 -right-2 bg-red-500 text-white text-[12px] font-semibold rounded-full w-[20px] h-[20px] flex items-center justify-center shadow-md'>
-        {cart.productsInCart.length}
-      </span>
-    )}
-  </Link>
-</div>
-
+					{/* 👤 Аккаунт */}
 					<div className='md:block hidden'>
 						<Link to='/acount'>
 							<AccountCircleIcon style={{ fontSize: '35px' }} />
@@ -109,9 +134,11 @@ export default function Layout() {
 					</div>
 				</div>
 			</nav>
+
 			<Outlet />
+
 			<footer className='bg-black text-white px-4 md:px-20 py-10 mt-[70px]'>
-				<div className='max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8 '>
+				<div className='max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8'>
 					<div>
 						<h2 className='text-lg font-bold mb-4'>Exclusive</h2>
 						<p className='mb-2'>Subscribe</p>
@@ -127,6 +154,7 @@ export default function Layout() {
 							</button>
 						</div>
 					</div>
+
 					<div>
 						<h2 className='text-lg font-bold mb-4'>Support</h2>
 						<p className='text-sm mb-1'>111 Bijoy sarani, Dhaka,</p>
@@ -134,6 +162,7 @@ export default function Layout() {
 						<p className='text-sm mb-1 mt-2'>exclusive@gmail.com</p>
 						<p className='text-sm'>+88015-88888-9999</p>
 					</div>
+
 					<div>
 						<h2 className='text-lg font-bold mb-4'>Account</h2>
 						<ul className='space-y-1 text-sm'>
@@ -143,6 +172,7 @@ export default function Layout() {
 							<li>Shop</li>
 						</ul>
 					</div>
+
 					<div>
 						<h2 className='text-lg font-bold mb-4'>Quick Link</h2>
 						<ul className='space-y-1 text-sm'>
@@ -156,15 +186,9 @@ export default function Layout() {
 					<div>
 						<h2 className='text-lg font-bold mb-4'>Social</h2>
 						<div className='flex space-x-4 text-xl'>
-							<i>
-								<FacebookIcon />
-							</i>
-							<i>
-								<TwitterIcon />
-							</i>
-							<i>
-								<InstagramIcon color='white' />
-							</i>
+							<i><FacebookIcon /></i>
+							<i><TwitterIcon /></i>
+							<i><InstagramIcon /></i>
 							<i>in</i>
 						</div>
 					</div>

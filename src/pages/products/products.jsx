@@ -15,6 +15,8 @@ import Typography from '@mui/material/Typography'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Button from '@mui/material/Button'
 import keyboard from '@/assets/keyboard.png'
+import { useSelector } from 'react-redux'
+import { API } from '@/utils/config'
 
 export default function Products() {
 	const [age, setAge] = useState('')
@@ -22,6 +24,8 @@ export default function Products() {
 	const handleChange = event => {
 		setAge(event.target.value)
 	}
+
+	const { prod } = useSelector(store => store.product)
 	return (
 		<>
 			<div className='flex justify-around items-center mt-[50px]'>
@@ -198,7 +202,7 @@ export default function Products() {
 							</AccordionDetails>
 							<AccordionActions></AccordionActions>
 						</Accordion>
-							<Accordion defaultExpanded>
+						<Accordion defaultExpanded>
 							<AccordionSummary
 								expandIcon={<ExpandMoreIcon />}
 								aria-controls='panel3-content'
@@ -233,8 +237,31 @@ export default function Products() {
 					</div>
 				</aside>
 
-					<aside className=' flex flex-wrap w-[70%] gap-6 justify-around m-auto md:m-0 mt-[40px]'>
-					 <div className='p-4 border rounded-lg bg-white shadow-md max-h-96 w-[300px]'>
+				<aside className=' flex flex-wrap w-[70%] gap-6 justify-around m-auto md:m-0 mt-[40px]'>
+					{prod?.map(el => (
+						<div className='p-4 border rounded-lg bg-white shadow-md max-h-96 w-[300px]'>
+							<div className='flex justify-between items-center'>
+								<span className='bg-red-400 text-white px-[15px] py-[5px] rounded-[10px]'>
+									-10%
+								</span>
+							</div>
+							<div className='flex flex-col'>
+								<img
+									src={`${API}/images/${el.image}`}
+									className='h-[150px] w-full object-contain mb-2'
+								/>
+							</div>
+							<h3 className='text-sm font-semibold mt-[10px]'>
+								
+							</h3>
+							<p className='text-red-500 font-bold'>{el.price}$</p>
+							<p className=''>⭐⭐⭐⭐⭐(75)</p>
+						</div>
+						
+						
+					))}
+
+					{/* <div className='p-4 border rounded-lg bg-white shadow-md max-h-96 w-[300px]'>
 							<div className='flex justify-between items-center'>
 								<span className='bg-red-400 text-white px-[15px] py-[5px] rounded-[10px]'>
 									-10%
@@ -253,8 +280,9 @@ export default function Products() {
 							</h3>
 							<p className='text-red-500 font-bold'>$960</p>
 							<p className=''>⭐⭐⭐⭐⭐(75)</p>
-						</div>
-						 <div className='p-4 border rounded-lg bg-white shadow-md max-h-96 w-[300px]'>
+						</div> */}
+
+					{/* <div className='p-4 border rounded-lg bg-white shadow-md max-h-96 w-[300px]'>
 							<div className='flex justify-between items-center'>
 								<span className='bg-red-400 text-white px-[15px] py-[5px] rounded-[10px]'>
 									-10%
@@ -373,9 +401,8 @@ export default function Products() {
 							</h3>
 							<p className='text-red-500 font-bold'>$960</p>
 							<p className=''>⭐⭐⭐⭐⭐(75)</p>
-						</div>
-						
-					</aside>
+						</div> */}
+				</aside>
 			</section>
 		</>
 	)

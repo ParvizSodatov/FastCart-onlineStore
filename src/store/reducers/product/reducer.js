@@ -23,62 +23,67 @@ export const categotryFilter = createAsyncThunk(
 		}
 	}
 )
-export const priceFilter = createAsyncThunk('product/priceFilter', async ({minPrice,maxPrice},{dispatch}) => {
+export const priceFilter = createAsyncThunk(
+	'product/priceFilter',
+	async ({ minPrice, maxPrice }, { dispatch }) => {
+		try {
+			let { data } = await axiosRequest(
+				`/Product/get-products?MinPrice=${minPrice}&MaxPrice=${maxPrice}`
+			)
+
+			return data.data.products
+		} catch (error) {
+			console.log(error)
+		}
+	}
+)
+
+export const getbrand = createAsyncThunk('product/getbrand', async id => {
 	try {
-		let { data } = await axiosRequest(
-			`/Product/get-products?MinPrice=${minPrice}&MaxPrice=${maxPrice}`
-		)
-		
-		return data.data.products
+		let { data } = await axiosStandart.get('/Brand/get-brands')
+		return data.data
 	} catch (error) {
 		console.log(error)
 	}
 })
 
-export const getbrand=createAsyncThunk('product/getbrand',async (id) => {
-	try {
-		let {data}=await axiosStandart.get("/Brand/get-brands")
-		return data.data
-	} catch (error) {
-		console.log(error);
+export const filterBrands = createAsyncThunk(
+	'product/filterBrands',
+	async id => {
+		try {
+			let { data } = await axiosStandart(`/Product/get-products?BrandId=${id}`)
+			console.log(data)
+			return data.data.products
+		} catch (error) {
+			console.log(error)
+		}
 	}
-})
-
-export const filterBrands=createAsyncThunk('product/filterBrands',async (id) => {
-	try {
-		let {data}=await axiosStandart(`/Product/get-products?BrandId=${id}`)
-		console.log(data);
-		return data.data.products
-		
-	} catch (error) {
-		console.log(error);
-		
-	}
-})
+)
 export const ProductSlice = createSlice({
 	name: 'product',
 	initialState: {
 		prod: [],
-		brand:[]
+		brand: [],
 	},
 	reducers: {},
 	extraReducers: builder => {
 		builder
 			.addCase(getProduct.fulfilled, (state, action) => {
+				// state.prod = []
 				state.prod = action.payload
 			})
 			.addCase(categotryFilter.fulfilled, (state, action) => {
 				// state.prod=[]
 				state.prod = action.payload
 			})
-			.addCase(priceFilter.fulfilled,(state,action)=>{
-				state.prod=action.payload
+			.addCase(priceFilter.fulfilled, (state, action) => {
+				state.prod = action.payload
 			})
-			.addCase(getbrand.fulfilled,(state,action)=>{
-				state.brand=action.payload
+			.addCase(getbrand.fulfilled, (state, action) => {
+				state.brand = action.payload
 			})
-			.addCase(filterBrands.fulfilled,(state,action)=>{
-				state.prod=action.payload
+			.addCase(filterBrands.fulfilled, (state, action) => {
+				state.prod = action.payload
 			})
 	},
 })

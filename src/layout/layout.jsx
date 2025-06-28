@@ -26,7 +26,7 @@ export default function Layout() {
 
 	return (
 		<>
-			<nav className='flex md:justify-around items-center mt-[15px]'>
+			<nav className='fixed top-0 left-0 w-full z-50 bg-white shadow-md flex md:justify-around items-center py-4'>
   {/* Мобайл: меню и логотип */}
   <div className='flex items-center md:hidden ml-[20px] gap-[10px]'>
     <div>
@@ -195,7 +195,9 @@ export default function Layout() {
 </nav>
 
 
-			<Outlet />
+			<main className='pt-[80px]'>
+				<Outlet />
+			</main>
 
 			<footer className='bg-black text-white px-4 md:px-20 py-10 mt-[70px]'>
 				<div className='max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8'>

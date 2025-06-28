@@ -38,7 +38,7 @@ import { useEffect } from 'react'
 import { get } from '@/store/reducers/categories/reducer'
 import { getProduct } from '@/store/reducers/product/reducer'
 import { addToCart } from '@/store/reducers/cartslice/reducer'
-import { Toaster } from 'sonner'
+import { toast, Toaster } from 'sonner'
 export default function Home() {
 	const { data } = useSelector(store => store.category)
 	const { prod } = useSelector(store => store.product)
@@ -49,17 +49,34 @@ export default function Home() {
 	}, [])
 	let navigate = useNavigate()
 	const wish = JSON.parse(localStorage.getItem('wish'))
+	// function handleAddToWishList(prod) {
+	// 	let product = {
+	// 		id: prod.id,
+	// 		productName: prod.productName,
+	// 		image: prod.image,
+	// 		price: prod.price,
+	// 		categoryName: prod.categoryName,
+	// 	}
+	// 	wish.push(product)
+	// 	localStorage.setItem('wish', JSON.stringify(wish))
+	// }
 	function handleAddToWishList(prod) {
-		let product = {
-			id: prod.id,
-			productName: prod.productName,
-			image: prod.image,
-			price: prod.price,
-			categoryName: prod.categoryName,
-		}
-		wish.push(product)
-		localStorage.setItem('wish', JSON.stringify(wish))
-	}
+    if (!localStorage.getItem('token')) {
+      alert('Please registrate or login❗️')
+      navigate('/login')
+    } else {
+      let product = {
+        id: prod.id,
+        productName: prod.productName,
+        image: prod.image,
+        price: prod.price,
+        categoryName: prod.categoryName,
+      }
+      wish.push(product)
+      localStorage.setItem('wish', JSON.stringify(wish))
+      toast.success('Succesfully added to wishlist✌️')
+    }
+  }
 
 	function handleAddToCart(id) {
 		const token = localStorage.getItem('token')

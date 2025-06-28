@@ -6,8 +6,13 @@ import { Toaster } from 'sonner'
 
 export default function Wishlist() {
   let product = JSON.parse(localStorage.getItem('wish')) || []
-
-  console.log('Wishlist:', product)
+    function handleDeletWishlist(id){
+      product=product.filter((el)=>el.id!=id)
+      localStorage.setItem('wish',JSON.stringify(product))
+      window.location.reload()
+      // console.log(id);  
+    }
+  // console.log('Wishlist:', product)
   const dispatch = useDispatch()
 
   function handleAddToCart(id) {
@@ -31,6 +36,7 @@ export default function Wishlist() {
             key={el.id}
             className='flex flex-col border rounded-xl bg-white shadow-md p-4 hover:shadow-xl transition-all'
           >
+            <Button sx={{fontSize:'18px'}} color='error' onClick={()=>handleDeletWishlist(el.id)}>DELETE</Button>
             <img
               src={`${API}/images/${el.image}`}
               alt={el.productName}

@@ -132,13 +132,16 @@ export default function Home() {
 					{data?.map(el => (
 						<div className='py-[8px]'>
 							<p className='text[18px] text-gray-700 font-medium hover:text-blue-600 hover:underline cursor-pointer transition-all duration-200'>
+								<Link to={'/categoryById/'+el.id}>
 								{el.categoryName}
+								</Link>
 							</p>
 						</div>
 					))}
 				</div>
 				<div className='flex md:hidden overflow-x-auto whitespace-nowrap gap-2 px-2 mt-2'>
 					{data?.map(el => (
+						<Link to={'/categoryById/'+el.id}>
 						<span
 							key={el.id}
 							className='inline-block bg-gray-300 text-[16px] px-3 py-2 rounded cursor-pointer'
@@ -146,6 +149,7 @@ export default function Home() {
 						>
 							{el.categoryName}
 						</span>
+						</Link>
 					))}
 				</div>
 				
@@ -173,30 +177,7 @@ export default function Home() {
 					</Swiper>
 				</div>
 			</section>
-			{/* <section className='md:flex items-end md:ml-[80px] hidden mt-[60px]'>
-				<div className='text-[44px]'>
-					<h1 className='text-red-500'>Today`s</h1>
-					<h1>Flash Sales</h1>
-				</div>
-				<div className='flex justify-around items-center text-[44px] gap-[16px] md:ml-[50px]'>
-					<div>
-						<h1 className='text-[17px]'>Days</h1>
-						<h1>03 :</h1>
-					</div>
-					<div>
-						<h1 className='text-[17px]'>Hours</h1>
-						<h1>03 :</h1>
-					</div>
-					<div>
-						<h1 className='text-[17px]'>Minutes</h1>
-						<h1>03 :</h1>
-					</div>
-					<div>
-						<h1 className='text-[17px]'>Seconds</h1>
-						<h1>56</h1>
-					</div>
-				</div>
-			</section> */}
+			
 			 <section className='md:flex items-end md:ml-[80px] hidden mt-[60px]'>
       <div className='text-[44px]'>
         <h1 className='text-red-500'>Today’s</h1>
@@ -224,7 +205,6 @@ export default function Home() {
         </div>
       </div>
     </section>
-
 			<section className='py-5 px-4 mt-[50px] max-w-[1400px] mx-auto'>
 				<Swiper
 					modules={[Navigation, Autoplay]}
@@ -292,7 +272,6 @@ export default function Home() {
 					))}
 				</Swiper>
 			</section>
-
 			<div className='flex justify-center mt-[100px]'>
 				<Link to='/products'>
 					<button className='relative overflow-hidden group bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold text-[18px] px-[60px] py-[12px]  shadow-lg hover:shadow-2xl transition duration-300'>

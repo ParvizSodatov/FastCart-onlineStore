@@ -12,6 +12,7 @@ import Wishlist from './pages/wishlist/wishlist'
 import Info from './pages/info/info'
 import Cart from './pages/cart/cart'
 import Checkout from './pages/checkOut/checkOut'
+import CategoryById from './pages/categoryById/categoryById'
 
 export default function App() {
 	const router = createBrowserRouter([
@@ -59,6 +60,11 @@ export default function App() {
 					{
 					path: '/info/:id',
 					element: <Info/>,
+				},
+
+					{
+					path: '/categoryById/:id',
+					element: <CategoryById/>,
 				},
 				{
 					path: '/cart',

@@ -20,6 +20,7 @@ import { API } from '@/utils/config'
 import { addToCart } from '@/store/reducers/cartslice/reducer'
 import { Toaster } from 'sonner'
 import { get } from '@/store/reducers/categories/reducer'
+import { categotryFilter, filterBrands, getbrand, getProduct, priceFilter } from '@/store/reducers/product/reducer'
 
 export default function Products() {
 	const [age, setAge] = useState('')
@@ -28,11 +29,15 @@ export default function Products() {
 		setAge(event.target.value)
 	}
 
-	const { prod } = useSelector(store => store.product)
+	const { prod,brand } = useSelector(store => store.product)
+	
+	console.log(brand);
+	
 	const { data } = useSelector(store => store.category)
+	const[minPrice,setMinPrice]=useState(0)
+	const [maxPrice,setMaxPrice]=useState(10000)
 	function handleAddToCart(id) {
 		const token = localStorage.getItem('token')
-
 		if (!token) {
 			alert('Please registraro or login for adding product to the cart')
 			navigate('/signUp')
@@ -42,6 +47,8 @@ export default function Products() {
 	}
 	useEffect(() => {
 		dispatch(get())
+		dispatch(getProduct())
+		dispatch(getbrand())
 	}, [])
 	return (
 		<>
@@ -82,11 +89,14 @@ export default function Products() {
 							</AccordionSummary>
 							<AccordionDetails>
 								{data?.map(el => (
-									<ul className='flex flex-col gap-[36px]'>
-									<li>{el.categoryName}</li>
-									<li></li>
-								</ul> 
+									<ul key={el.id} className='flex flex-col gap-[36px]'>
+										<li onClick={() => dispatch(categotryFilter(el.id))}>
+											{el.categoryName}
+										</li>
+										<li></li>
+									</ul>
 								))}
+								<p className='text-red-500'>See All</p>
 							</AccordionDetails>
 						</Accordion>
 						<Accordion>
@@ -100,24 +110,15 @@ export default function Products() {
 								</Typography>
 							</AccordionSummary>
 							<AccordionDetails>
-								<ul className='flex flex-col gap-[30px]'>
-									<li className='flex items-center gap-[10px]'>
-										<input type='checkbox' /> Samsung
-									</li>
-									<li className='flex items-center gap-[10px]'>
-										<input type='checkbox' /> Apple
-									</li>
-									<li className='flex items-center gap-[10px]'>
-										<input type='checkbox' /> Huawei
-									</li>
-									<li className='flex items-center gap-[10px]'>
-										<input type='checkbox' /> Pocco
-									</li>
-									<li className='flex items-center gap-[10px]'>
-										<input type='checkbox' /> Lenovo
-									</li>
-									<li className='text-[#DB4444]'>See all</li>
-								</ul>
+                        {brand?.map((el)=>(
+									<ul className='flex flex-col gap-[36px]' key={el.id}>
+										<li onClick={()=>dispatch(filterBrands(el.id))}>{el.brandName}</li>
+										<ul></ul>
+									</ul>
+								)) }
+								<h1 className='text-[20px] text-red-500'>See All</h1>
+
+							
 							</AccordionDetails>
 						</Accordion>
 						<Accordion defaultExpanded>
@@ -164,16 +165,53 @@ export default function Products() {
 								</Typography>
 							</AccordionSummary>
 							<AccordionDetails>
-								<input type='range' name='' id='' className='w-[260px]' />
+							<div className='flex justify-center'>
+								<div>
+									<h1>MIN</h1>
+									<input
+									type='range'
+									value={minPrice}
+									onChange={(e)=>setMinPrice(e.target.value)}
+									name=''
+									min='0'
+									max='10000'
+									id=''
+									className='w-[100px]
+                       
+
+								'
+
+								/>
+								</div>
+                      <div>
+								 <h1>MAX</h1>
+									<input
+									value={maxPrice}
+									onChange={(e)=>setMaxPrice(e.target.value)}
+									type='range'
+									name=''
+									min='0'
+									max='10000'
+									id=''
+									className='w-[100px]
+								'
+								
+								/>
+							 </div>
+							</div>
 								<div className='flex gap-[10px] mt-[30px]'>
 									<TextField
 										id='outlined-basic'
 										label='Min'
+										value={minPrice}
+										onChange={(e)=>setMinPrice(e.target.value)}
 										variant='outlined'
 									/>
 									<TextField
 										id='outlined-basic'
 										label='Max'
+										value={maxPrice}
+										onChange={(e)=>setMaxPrice(e.target.value)}
 										variant='outlined'
 									/>
 								</div>
@@ -181,8 +219,9 @@ export default function Products() {
 									color='inherit'
 									sx={{ width: '250px', marginTop: '20px' }}
 									variant='outlined'
+									onClick={()=>dispatch(priceFilter({maxPrice,minPrice}))}
 								>
-									Outlined
+								Apply
 								</Button>
 							</AccordionDetails>
 							<AccordionActions></AccordionActions>
@@ -256,7 +295,10 @@ export default function Products() {
 
 				<aside className=' flex flex-wrap w-[70%] gap-6 justify-around m-auto md:m-0 mt-[40px]'>
 					{prod?.map(el => (
-						<div className='p-4 border rounded-lg bg-white shadow-md max-h-96 w-[300px]'>
+						<div
+							key={el.id}
+							className='p-4 border rounded-lg bg-white shadow-md max-h-96 w-[300px]'
+						>
 							<div className='flex justify-between items-center'>
 								<span className='bg-red-400 text-white px-[15px] py-[5px] rounded-[10px]'>
 									-10%
@@ -281,147 +323,6 @@ export default function Products() {
 						</div>
 					))}
 
-					{/* <div className='p-4 border rounded-lg bg-white shadow-md max-h-96 w-[300px]'>
-							<div className='flex justify-between items-center'>
-								<span className='bg-red-400 text-white px-[15px] py-[5px] rounded-[10px]'>
-									-10%
-								</span>
-								
-							</div>
-							<div className='flex flex-col'>
-								<img
-									src={keyboard}
-									className='h-[150px] w-full object-contain mb-2'
-								/>
-								
-							</div>
-							<h3 className='text-sm font-semibold mt-[10px]'>
-								AK-900 Wired Keyboard
-							</h3>
-							<p className='text-red-500 font-bold'>$960</p>
-							<p className=''>⭐⭐⭐⭐⭐(75)</p>
-						</div> */}
-
-					{/* <div className='p-4 border rounded-lg bg-white shadow-md max-h-96 w-[300px]'>
-							<div className='flex justify-between items-center'>
-								<span className='bg-red-400 text-white px-[15px] py-[5px] rounded-[10px]'>
-									-10%
-								</span>
-								
-							</div>
-							<div className='flex flex-col'>
-								<img
-									src={keyboard}
-									className='h-[150px] w-full object-contain mb-2'
-								/>
-								
-							</div>
-							<h3 className='text-sm font-semibold mt-[10px]'>
-								AK-900 Wired Keyboard
-							</h3>
-							<p className='text-red-500 font-bold'>$960</p>
-							<p className=''>⭐⭐⭐⭐⭐(75)</p>
-						</div>
-						 <div className='p-4 border rounded-lg bg-white shadow-md max-h-96 w-[300px]'>
-							<div className='flex justify-between items-center'>
-								<span className='bg-red-400 text-white px-[15px] py-[5px] rounded-[10px]'>
-									-10%
-								</span>
-								
-							</div>
-							<div className='flex flex-col'>
-								<img
-									src={keyboard}
-									className='h-[150px] w-full object-contain mb-2'
-								/>
-								
-							</div>
-							<h3 className='text-sm font-semibold mt-[10px]'>
-								AK-900 Wired Keyboard
-							</h3>
-							<p className='text-red-500 font-bold'>$960</p>
-							<p className=''>⭐⭐⭐⭐⭐(75)</p>
-						</div>
-						 <div className='p-4 border rounded-lg bg-white shadow-md max-h-96 w-[300px]'>
-							<div className='flex justify-between items-center'>
-								<span className='bg-red-400 text-white px-[15px] py-[5px] rounded-[10px]'>
-									-10%
-								</span>
-								
-							</div>
-							<div className='flex flex-col'>
-								<img
-									src={keyboard}
-									className='h-[150px] w-full object-contain mb-2'
-								/>
-								
-							</div>
-							<h3 className='text-sm font-semibold mt-[10px]'>
-								AK-900 Wired Keyboard
-							</h3>
-							<p className='text-red-500 font-bold'>$960</p>
-							<p className=''>⭐⭐⭐⭐⭐(75)</p>
-						</div>
-						 <div className='p-4 border rounded-lg bg-white shadow-md max-h-96 w-[300px]'>
-							<div className='flex justify-between items-center'>
-								<span className='bg-red-400 text-white px-[15px] py-[5px] rounded-[10px]'>
-									-10%
-								</span>
-								
-							</div>
-							<div className='flex flex-col'>
-								<img
-									src={keyboard}
-									className='h-[150px] w-full object-contain mb-2'
-								/>
-								
-							</div>
-							<h3 className='text-sm font-semibold mt-[10px]'>
-								AK-900 Wired Keyboard
-							</h3>
-							<p className='text-red-500 font-bold'>$960</p>
-							<p className=''>⭐⭐⭐⭐⭐(75)</p>
-						</div>
-						 <div className='p-4 border rounded-lg bg-white shadow-md max-h-96 w-[300px]'>
-							<div className='flex justify-between items-center'>
-								<span className='bg-red-400 text-white px-[15px] py-[5px] rounded-[10px]'>
-									-10%
-								</span>
-								
-							</div>
-							<div className='flex flex-col'>
-								<img
-									src={keyboard}
-									className='h-[150px] w-full object-contain mb-2'
-								/>
-								
-							</div>
-							<h3 className='text-sm font-semibold mt-[10px]'>
-								AK-900 Wired Keyboard
-							</h3>
-							<p className='text-red-500 font-bold'>$960</p>
-							<p className=''>⭐⭐⭐⭐⭐(75)</p>
-						</div>
-						 <div className='p-4 border rounded-lg bg-white shadow-md h-[45vh] w-[300px]'>
-							<div className='flex justify-between items-center'>
-								<span className='bg-red-400 text-white px-[15px] py-[5px] rounded-[10px]'>
-									-10%
-								</span>
-								
-							</div>
-							<div className='flex flex-col'>
-								<img
-									src={keyboard}
-									className='h-[150px] w-full object-contain mb-2'
-								/>
-								
-							</div>
-							<h3 className='text-sm font-semibold mt-[10px]'>
-								AK-900 Wired Keyboard
-							</h3>
-							<p className='text-red-500 font-bold'>$960</p>
-							<p className=''>⭐⭐⭐⭐⭐(75)</p>
-						</div> */}
 				</aside>
 			</section>
 			<Toaster position='top-right' richColors />

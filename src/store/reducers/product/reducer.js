@@ -74,16 +74,16 @@ export const ProductSlice = createSlice({
 			})
 			.addCase(categotryFilter.fulfilled, (state, action) => {
 				// state.prod=[]
-				state.prod = action.payload
+				 state.prod = action.payload || [] 
 			})
 			.addCase(priceFilter.fulfilled, (state, action) => {
-				state.prod = action.payload
+			  state.prod = action.payload || [] 
 			})
 			.addCase(getbrand.fulfilled, (state, action) => {
 				state.brand = action.payload
 			})
 			.addCase(filterBrands.fulfilled, (state, action) => {
-				state.prod = action.payload
+				 state.prod = action.payload || [] 
 			})
 	},
 })

@@ -27,113 +27,173 @@ export default function Layout() {
 	return (
 		<>
 			<nav className='flex md:justify-around items-center mt-[15px]'>
-				<div className='flex items-center md:hidden ml-[20px] gap-[10px]'>
-					<div>
-						<Button
-							id='basic-button'
-							aria-controls={open ? 'basic-menu' : undefined}
-							aria-haspopup='true'
-							aria-expanded={open ? 'true' : undefined}
-							onClick={handleClick}
-						>
-							<MenuIcon style={{ fontSize: '45px', color: 'black' }} />
-						</Button>
-						<Menu
-							id='basic-menu'
-							anchorEl={anchorEl}
-							open={open}
-							onClose={handleClose}
-							slotProps={{
-								list: {
-									'aria-labelledby': 'basic-button',
-								},
-							}}
-						>
-							<Link to='/'>
-								<MenuItem onClick={handleClose}>Home</MenuItem>
-							</Link>
-							<Link to='/acount'>
-								<MenuItem onClick={handleClose}>My account</MenuItem>
-							</Link>
-							<Link to='/signUp'>
-								<MenuItem onClick={handleClose}>SignUp</MenuItem>
-							</Link>
-							<Link to='/about'>
-								<MenuItem onClick={handleClose}>About</MenuItem>
-							</Link>
-						</Menu>
-					</div>
-					<h1 className='text-[35px]'>Exclusive</h1>
-				</div>
+  {/* Мобайл: меню и логотип */}
+  <div className='flex items-center md:hidden ml-[20px] gap-[10px]'>
+    <div>
+      <Button
+        id='basic-button'
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup='true'
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+        sx={{
+          '&:hover': {
+            backgroundColor: 'transparent',
+            color: '#f43f5e',
+          },
+        }}
+      >
+        <MenuIcon style={{ fontSize: '45px', color: 'black' }} />
+      </Button>
+      <Menu
+        id='basic-menu'
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        slotProps={{
+          list: {
+            'aria-labelledby': 'basic-button',
+          },
+        }}
+      >
+        <Link to='/'>
+          <MenuItem
+            onClick={handleClose}
+            sx={{
+              '&:hover': {
+                backgroundColor: '#f43f5e',
+                color: 'white',
+              },
+            }}
+          >
+            Home
+          </MenuItem>
+        </Link>
+        <Link to='/acount'>
+          <MenuItem
+            onClick={handleClose}
+            sx={{
+              '&:hover': {
+                backgroundColor: '#f43f5e',
+                color: 'white',
+              },
+            }}
+          >
+            My account
+          </MenuItem>
+        </Link>
+        <Link to='/signUp'>
+          <MenuItem
+            onClick={handleClose}
+            sx={{
+              '&:hover': {
+                backgroundColor: '#f43f5e',
+                color: 'white',
+              },
+            }}
+          >
+            SignUp
+          </MenuItem>
+        </Link>
+        <Link to='/about'>
+          <MenuItem
+            onClick={handleClose}
+            sx={{
+              '&:hover': {
+                backgroundColor: '#f43f5e',
+                color: 'white',
+              },
+            }}
+          >
+            About
+          </MenuItem>
+        </Link>
+      </Menu>
+    </div>
+    <h1 className='text-[35px] font-bold hover:text-rose-500 transition-colors duration-300'>
+      Exclusive
+    </h1>
+  </div>
 
-				<img className='h-[7vh] md:block hidden' src={logo} alt='logo' />
+  {/* Десктоп: логотип */}
+  <img className='h-[7vh] md:block hidden' src={logo} alt='logo' />
 
-				<div className='md:flex justify-center gap-[30px] hidden'>
-					<p className='text-[20px] '>
-						<Link to='/'>Home</Link>
-					</p>
-					<p className='text-[20px] '>
-						<Link to='/about'>About</Link>
-					</p>
-					<p className='text-[20px]'>
-						<Link to='/contact'>Contact</Link>
-					</p>
-					<p className='text-[20px]'>
-						<Link to='/signUp'>SignUp</Link>
-					</p>
-				</div>
+  {/* Десктоп: навигация */}
+  <div className='md:flex justify-center gap-[30px] hidden'>
+    <p className='text-[20px] hover:text-rose-500 transition-colors duration-300'>
+      <Link to='/'>Home</Link>
+    </p>
+    <p className='text-[20px] hover:text-rose-500 transition-colors duration-300'>
+      <Link to='/about'>About</Link>
+    </p>
+    <p className='text-[20px] hover:text-rose-500 transition-colors duration-300'>
+      <Link to='/contact'>Contact</Link>
+    </p>
+    <p className='text-[20px] hover:text-rose-500 transition-colors duration-300'>
+      <Link to='/signUp'>SignUp</Link>
+    </p>
+  </div>
 
-				<div className='flex items-center justify-center gap-[10px] w-[300px]'>
+  {/* Иконки: поиск, wishlist, корзина, аккаунт */}
+  <div className='flex items-center justify-center gap-[10px] w-[300px]'>
+    {/* 🔍 Поиск */}
+    <div className='md:block hidden'>
+      <TextField
+        label='search.....'
+        variant='standard'
+        sx={{
+          '& .MuiInput-underline:after': {
+            borderBottomColor: '#f43f5e',
+          },
+        }}
+      />
+    </div>
 
-					{/* 🔍 Поиск */}
-					<div className='md:block hidden'>
-						<TextField label='search.....' variant='standard' />
-					</div>
+    {/* ❤️ Wishlist – Десктоп */}
+    <div className='relative md:block hidden hover:text-rose-500 transition-colors duration-300'>
+      <Link to='/wishlist'>
+        <FavoriteBorderIcon style={{ fontSize: '30px' }} />
+        {product != '' && product != null && product.length > 0 && (
+          <span className='absolute -top-2 -right-2 bg-red-500 text-white text-[12px] font-semibold rounded-full w-[20px] h-[20px] flex items-center justify-center shadow-md'>
+            {product.length}
+          </span>
+        )}
+      </Link>
+    </div>
 
-					{/* ❤️ Wishlist – Десктоп */}
-					<div className='relative md:block hidden'>
-						<Link to='/wishlist'>
-							<FavoriteBorderIcon style={{ fontSize: '30px' }} />
-							{product != '' && product != null && product.length > 0 && (
-								<span className='absolute -top-2 -right-2 bg-red-500 text-white text-[12px] font-semibold rounded-full w-[20px] h-[20px] flex items-center justify-center shadow-md'>
-									{product.length}
-								</span>
-							)}
-						</Link>
-					</div>
+    {/* ❤️ Wishlist – Мобайл */}
+    <div className='relative md:hidden hover:text-rose-500 transition-colors duration-300'>
+      <Link to='/wishlist'>
+        <FavoriteBorderIcon style={{ fontSize: '30px' }} />
+        {product != '' && product != null && product.length > 0 && (
+          <span className='absolute -top-2 -right-2 bg-red-500 text-white text-[12px] font-semibold rounded-full w-[20px] h-[20px] flex items-center justify-center shadow-md'>
+            {product.length}
+          </span>
+        )}
+      </Link>
+    </div>
 
-					{/* ❤️ Wishlist – Мобилка */}
-					<div className='relative md:hidden'>
-						<Link to='/wishlist'>
-							<FavoriteBorderIcon style={{ fontSize: '30px' }} />
-							{product != '' && product != null && product.length > 0 && (
-								<span className='absolute -top-2 -right-2 bg-red-500 text-white text-[12px] font-semibold rounded-full w-[20px] h-[20px] flex items-center justify-center shadow-md'>
-									{product.length}
-								</span>
-							)}
-						</Link>
-					</div>
+    {/* 🛒 Корзина */}
+    <div className='relative hover:text-rose-500 transition-colors duration-300'>
+      <Link to='/cart'>
+        <ShoppingCartIcon style={{ fontSize: '30px' }} />
+        {cart?.productsInCart?.length > 0 && (
+          <span className='absolute -top-2 -right-2 bg-red-500 text-white text-[12px] font-semibold rounded-full w-[20px] h-[20px] flex items-center justify-center shadow-md'>
+            {cart.productsInCart.length}
+          </span>
+        )}
+      </Link>
+    </div>
 
-					{/* 🛒 Корзина */}
-					<div className='relative'>
-						<Link to='/cart'>
-							<ShoppingCartIcon style={{ fontSize: '30px' }} />
-							{cart?.productsInCart?.length > 0 && (
-								<span className='absolute -top-2 -right-2 bg-red-500 text-white text-[12px] font-semibold rounded-full w-[20px] h-[20px] flex items-center justify-center shadow-md'>
-									{cart.productsInCart.length}
-								</span>
-							)}
-						</Link>
-					</div>
+    {/* 👤 Аккаунт */}
+    <div className='md:block hidden hover:text-rose-500 transition-colors duration-300'>
+      <Link to='/acount'>
+        <AccountCircleIcon style={{ fontSize: '35px' }} />
+      </Link>
+    </div>
+  </div>
+</nav>
 
-					{/* 👤 Аккаунт */}
-					<div className='md:block hidden'>
-						<Link to='/acount'>
-							<AccountCircleIcon style={{ fontSize: '35px' }} />
-						</Link>
-					</div>
-				</div>
-			</nav>
 
 			<Outlet />
 

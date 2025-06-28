@@ -57,26 +57,11 @@ export default function Products() {
 
 	return (
 		<>
-			<div className='flex justify-around items-center mt-[50px]'>
+			<div className='flex justify-start items-center mt-[50px] ml-[90px]'>
 				<h1 className='md:block hidden'>
 					<span className='text-gray-400'>Home /</span> Explore our Products
 				</h1>
-				<Box sx={{ width: '300px' }}>
-					<FormControl fullWidth>
-						<InputLabel id='demo-simple-select-label'>Age</InputLabel>
-						<Select
-							labelId='demo-simple-select-label'
-							id='demo-simple-select'
-							value={age}
-							label='Age'
-							onChange={handleChange}
-						>
-							<MenuItem value={10}>Ten</MenuItem>
-							<MenuItem value={20}>Twenty</MenuItem>
-							<MenuItem value={30}>Thirty</MenuItem>
-						</Select>
-					</FormControl>
-				</Box>
+				
 			</div>
 
 			<section className='flex flex-wrap mt-[80px] items-start justify-center md:justify-start'>
@@ -101,12 +86,12 @@ export default function Products() {
 									</li>
 								))}
 							</ul>
-							<p
-								className='text-red-500 mt-4 cursor-pointer'
+							<button
 								onClick={() => dispatch(getProduct())}
+								className='mt-4 px-4 py-2 bg-[#DB4444] text-white rounded hover:bg-[#c23333] transition'
 							>
 								See All
-							</p>
+							</button>
 						</AccordionDetails>
 					</Accordion>
 

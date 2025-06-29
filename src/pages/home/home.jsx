@@ -4,33 +4,26 @@ import 'swiper/css/autoplay' // для автоперехода
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import { Autoplay, Navigation } from 'swiper/modules'
 import iphone from '@/assets/iphone.png'
-import SearchIcon from '@mui/icons-material/Search'
-import jostik from '@/assets/jostik.png'
-import keyboard from '@/assets/keyboard.png'
-import chair from '@/assets/chair.png'
-import computer from '@/assets/computer.png'
+
 import kalonka from '@/assets/kalonka.png'
 import 'swiper/css/navigation'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
-import i1 from '@/assets/i1.png'
-import i2 from '@/assets/i2.png'
-import i3 from '@/assets/i3.png'
-import a1 from '@/assets/a1.png'
-import a2 from '@/assets/a2.png'
-import a3 from '@/assets/a3.png'
-import a4 from '@/assets/a4.png'
+
 import camera from '@/assets/Camera.png'
 import f1 from '@/assets/f1.png'
 import i5 from '@/assets/i5.png'
 import i6 from '@/assets/i6.png'
 import p1 from '@/assets/p1.png'
 import p2 from '@/assets/p2.png'
+import sam2 from '@/assets/sam2.png'
 import p3 from '@/assets/p3.png'
 import p4 from '@/assets/p4.png'
 import fgg from '@/assets/fgg.png'
 import oo from '@/assets/oo.png'
-
+import rek2 from '@/assets/rek2.jpg'
+import xiaomi from '@/assets/xiaomi.jpg'
+import sony from '@/assets/sony.jpg'
 import { Button } from '@mui/material'
 import { Link, useNavigate } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
@@ -43,7 +36,7 @@ import {
 	addWishList,
 	removefromWishList,
 } from '@/store/reducers/wishlist/reducers'
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteIcon from '@mui/icons-material/Favorite'
 import Wishlist from '../wishlist/wishlist'
 export default function Home() {
 	const calculateTimeLeft = () => {
@@ -84,7 +77,6 @@ export default function Home() {
 
 		return () => clearInterval(timer)
 	}, [])
-
 	const { data } = useSelector(store => store.category)
 	const { prod } = useSelector(store => store.product)
 	const dispatch = useDispatch()
@@ -95,7 +87,6 @@ export default function Home() {
 	const navigate = useNavigate()
 	function handleAddToCart(id) {
 		const token = localStorage.getItem('token')
-
 		if (!token) {
 			alert('Please registraro or login for adding product to the cart')
 			navigate('/signUp')
@@ -103,17 +94,16 @@ export default function Home() {
 		}
 		dispatch(addToCart(id))
 	}
-
 	const wishlist = JSON.parse(localStorage.getItem('wishlist')) || []
 	const toggleWishList = product => {
 		if (localStorage.getItem('token') == null) {
 			alert('please login')
 			return
 		}
-		const exits =wishlist.some(item => item.id === product.id)
+		const exits = wishlist.some(item => item.id === product.id)
 		if (exits) {
 			dispatch(removefromWishList(product.id))
-			toast.error('Продукт удалён из WishList')
+			toast.info('Продукт удалён из WishList')
 		} else {
 			dispatch(addWishList(product))
 			toast.success('Добавлено в Wishlist')
@@ -158,13 +148,19 @@ export default function Home() {
 						slidesPerView={1}
 					>
 						<SwiperSlide>
-							<img src={iphone} alt='Фото 1' className='w-full rounded-xl' />
+							<img src={iphone} alt='Фото 1' className='w-full rounded-xl md:h-[53vh] h-[25vh]' />
 						</SwiperSlide>
 						<SwiperSlide>
-							<img src={iphone} alt='Фото 2' className='w-full rounded-xl' />
+							<img src={rek2} alt='Фото 2' className='w-full rounded-xl md:h-[53vh] h-[25vh]' />
 						</SwiperSlide>
 						<SwiperSlide>
-							<img src={iphone} alt='Фото 3' className='w-full rounded-xl' />
+							<img src={sam2} alt='Фото 3' className='w-full rounded-xl md:h-[53vh] aspect-ratio h-[25vh]' />
+						</SwiperSlide>
+						<SwiperSlide>
+							<img src={xiaomi} alt='Фото 3' className='w-full rounded-xl md:h-[53vh] h-[25vh]' />
+						</SwiperSlide>
+						<SwiperSlide>
+							<img src={sony} alt='Фото 3' className='w-full rounded-xl md:h-[53vh] h-[25vh] aspect-ratio ' />
 						</SwiperSlide>
 					</Swiper>
 				</div>
@@ -275,83 +271,83 @@ export default function Home() {
 				</Swiper>
 			</section> */}
 			<section className='py-5 px-4 mt-[50px] max-w-[1400px] mx-auto'>
-  <Swiper
-    modules={[Navigation, Autoplay]}
-    slidesPerView={1.2}
-    spaceBetween={12}
-    navigation
-    loop={true}
-    autoplay={{
-      delay: 3000,
-      disableOnInteraction: false,
-    }}
-    breakpoints={{
-      360: { slidesPerView: 1.3, spaceBetween: 12 },
-      480: { slidesPerView: 1.8, spaceBetween: 14 },
-      640: { slidesPerView: 2.2, spaceBetween: 16 },
-      768: { slidesPerView: 3, spaceBetween: 20 },
-      1024: { slidesPerView: 4, spaceBetween: 24 },
-    }}
-  >
-    {prod?.map(el => {
-      const isWished = wishlist.some(item => item.id === el.id)
-      return (
-        <SwiperSlide key={el.id}>
-          <div className='p-4 border rounded-xl bg-white shadow-md w-[220px] sm:w-[250px] mx-auto hover:shadow-lg transition duration-300'>
-            <div className='flex justify-between items-center mb-2'>
-              <span className='bg-red-500 text-white px-3 py-1 rounded-lg text-xs'>
-                -40%
-              </span>
-              <div className='text-gray-600 flex flex-col items-center gap-1'>
-                {isWished ? (
-                  <FavoriteIcon
-                    sx={{ color: 'red' }}
-                    onClick={() => toggleWishList(el)}
-                    className='cursor-pointer hover:text-red-500'
-                  />
-                ) : (
-                  <FavoriteBorderIcon
-                    onClick={() => toggleWishList(el)}
-                    className='cursor-pointer hover:text-red-500'
-                  />
-                )}
-                <Link to={'/info/' + el.id}>
-                  <VisibilityIcon className='cursor-pointer hover:text-blue-500' />
-                </Link>
-              </div>
-            </div>
+				<Swiper
+					modules={[Navigation, Autoplay]}
+					slidesPerView={1.2}
+					spaceBetween={12}
+					navigation
+					loop={true}
+					autoplay={{
+						delay: 3000,
+						disableOnInteraction: false,
+					}}
+					breakpoints={{
+						360: { slidesPerView: 1.3, spaceBetween: 12 },
+						480: { slidesPerView: 1.8, spaceBetween: 14 },
+						640: { slidesPerView: 2.2, spaceBetween: 16 },
+						768: { slidesPerView: 3, spaceBetween: 20 },
+						1024: { slidesPerView: 4, spaceBetween: 24 },
+					}}
+				>
+					{prod?.map(el => {
+						const isWished = wishlist.some(item => item.id === el.id)
+						return (
+							<SwiperSlide key={el.id}>
+								<div className='p-4 border rounded-xl bg-white shadow-md w-[220px] sm:w-[250px] mx-auto hover:shadow-lg transition duration-300'>
+									<div className='flex justify-between items-center mb-2'>
+										<span className='bg-red-500 text-white px-3 py-1 rounded-lg text-xs'>
+											-40%
+										</span>
+										<div className='text-gray-600 flex flex-col items-center gap-1'>
+											{isWished ? (
+												<FavoriteIcon
+													sx={{ color: 'red' }}
+													onClick={() => toggleWishList(el)}
+													className='cursor-pointer hover:text-red-500'
+												/>
+											) : (
+												<FavoriteBorderIcon
+													onClick={() => toggleWishList(el)}
+													className='cursor-pointer hover:text-red-500'
+												/>
+											)}
+											<Link to={'/info/' + el.id}>
+												<VisibilityIcon className='cursor-pointer hover:text-blue-500' />
+											</Link>
+										</div>
+									</div>
 
-            <div className='flex flex-col items-center'>
-              <img
-                src={`http://37.27.29.18:8002/images/${el.image}`}
-                className='h-[140px] w-full object-contain mb-3'
-              />
-              <Button
-                variant='outlined'
-                color='inherit'
-                size='small'
-                onClick={() => handleAddToCart(el.id)}
-                className='!text-xs'
-              >
-                Add To Cart
-              </Button>
-            </div>
+									<div className='flex flex-col items-center'>
+										<img
+											src={`http://37.27.29.18:8002/images/${el.image}`}
+											className='h-[140px] w-full object-contain mb-3'
+										/>
+										<Button
+											variant='outlined'
+											color='inherit'
+											size='small'
+											onClick={() => handleAddToCart(el.id)}
+											className='!text-xs'
+										>
+											Add To Cart
+										</Button>
+									</div>
 
-            <h3 className='text-sm font-semibold mt-2 text-center truncate'>
-              {el.productName}
-            </h3>
-            <p className='text-red-500 font-bold text-center'>
-              {el.price}$
-            </p>
-            <p className='text-center text-xs text-yellow-500'>
-              ⭐⭐⭐⭐⭐ (90)
-            </p>
-          </div>
-        </SwiperSlide>
-      )
-    })}
-  </Swiper>
-</section>
+									<h3 className='text-sm font-semibold mt-2 text-center truncate'>
+										{el.productName}
+									</h3>
+									<p className='text-red-500 font-bold text-center'>
+										{el.price}$
+									</p>
+									<p className='text-center text-xs text-yellow-500'>
+										⭐⭐⭐⭐⭐ (90)
+									</p>
+								</div>
+							</SwiperSlide>
+						)
+					})}
+				</Swiper>
+			</section>
 
 			<div className='flex justify-center mt-[100px]'>
 				<Link to='/products'>
@@ -471,84 +467,84 @@ export default function Home() {
 					))}
 				</Swiper>
 			</section> */}
-					<section className='py-5 px-4 mt-[50px] max-w-[1400px] mx-auto'>
-  <Swiper
-    modules={[Navigation, Autoplay]}
-    slidesPerView={1.2}
-    spaceBetween={12}
-    navigation
-    loop={true}
-    autoplay={{
-      delay: 3000,
-      disableOnInteraction: false,
-    }}
-    breakpoints={{
-      360: { slidesPerView: 1.3, spaceBetween: 12 },
-      480: { slidesPerView: 1.8, spaceBetween: 14 },
-      640: { slidesPerView: 2.2, spaceBetween: 16 },
-      768: { slidesPerView: 3, spaceBetween: 20 },
-      1024: { slidesPerView: 4, spaceBetween: 24 },
-    }}
-  >
-    {prod?.map(el => {
-      const isWished = wishlist.some(item => item.id === el.id)
-      return (
-        <SwiperSlide key={el.id}>
-          <div className='p-4 border rounded-xl bg-white shadow-md w-[220px] sm:w-[250px] mx-auto hover:shadow-lg transition duration-300'>
-            <div className='flex justify-between items-center mb-2'>
-              <span className='bg-red-500 text-white px-3 py-1 rounded-lg text-xs'>
-                -40%
-              </span>
-              <div className='text-gray-600 flex flex-col items-center gap-1'>
-                {isWished ? (
-                  <FavoriteIcon
-                    sx={{ color: 'red' }}
-                    onClick={() => toggleWishList(el)}
-                    className='cursor-pointer hover:text-red-500'
-                  />
-                ) : (
-                  <FavoriteBorderIcon
-                    onClick={() => toggleWishList(el)}
-                    className='cursor-pointer hover:text-red-500'
-                  />
-                )}
-                <Link to={'/info/' + el.id}>
-                  <VisibilityIcon className='cursor-pointer hover:text-blue-500' />
-                </Link>
-              </div>
-            </div>
+			<section className='py-5 px-4 mt-[50px] max-w-[1400px] mx-auto'>
+				<Swiper
+					modules={[Navigation, Autoplay]}
+					slidesPerView={1.2}
+					spaceBetween={12}
+					navigation
+					loop={true}
+					autoplay={{
+						delay: 3000,
+						disableOnInteraction: false,
+					}}
+					breakpoints={{
+						360: { slidesPerView: 1.3, spaceBetween: 12 },
+						480: { slidesPerView: 1.8, spaceBetween: 14 },
+						640: { slidesPerView: 2.2, spaceBetween: 16 },
+						768: { slidesPerView: 3, spaceBetween: 20 },
+						1024: { slidesPerView: 4, spaceBetween: 24 },
+					}}
+				>
+					{prod?.map(el => {
+						const isWished = wishlist.some(item => item.id === el.id)
+						return (
+							<SwiperSlide key={el.id}>
+								<div className='p-4 border rounded-xl bg-white shadow-md w-[220px] sm:w-[250px] mx-auto hover:shadow-lg transition duration-300'>
+									<div className='flex justify-between items-center mb-2'>
+										<span className='bg-red-500 text-white px-3 py-1 rounded-lg text-xs'>
+											-40%
+										</span>
+										<div className='text-gray-600 flex flex-col items-center gap-1'>
+											{isWished ? (
+												<FavoriteIcon
+													sx={{ color: 'red' }}
+													onClick={() => toggleWishList(el)}
+													className='cursor-pointer hover:text-red-500'
+												/>
+											) : (
+												<FavoriteBorderIcon
+													onClick={() => toggleWishList(el)}
+													className='cursor-pointer hover:text-red-500'
+												/>
+											)}
+											<Link to={'/info/' + el.id}>
+												<VisibilityIcon className='cursor-pointer hover:text-blue-500' />
+											</Link>
+										</div>
+									</div>
 
-            <div className='flex flex-col items-center'>
-              <img
-                src={`http://37.27.29.18:8002/images/${el.image}`}
-                className='h-[140px] w-full object-contain mb-3'
-              />
-              <Button
-                variant='outlined'
-                color='inherit'
-                size='small'
-                onClick={() => handleAddToCart(el.id)}
-                className='!text-xs'
-              >
-                Add To Cart
-              </Button>
-            </div>
+									<div className='flex flex-col items-center'>
+										<img
+											src={`http://37.27.29.18:8002/images/${el.image}`}
+											className='h-[140px] w-full object-contain mb-3'
+										/>
+										<Button
+											variant='outlined'
+											color='inherit'
+											size='small'
+											onClick={() => handleAddToCart(el.id)}
+											className='!text-xs'
+										>
+											Add To Cart
+										</Button>
+									</div>
 
-            <h3 className='text-sm font-semibold mt-2 text-center truncate'>
-              {el.productName}
-            </h3>
-            <p className='text-red-500 font-bold text-center'>
-              {el.price}$
-            </p>
-            <p className='text-center text-xs text-yellow-500'>
-              ⭐⭐⭐⭐⭐ (90)
-            </p>
-          </div>
-        </SwiperSlide>
-      )
-    })}
-  </Swiper>
-</section>
+									<h3 className='text-sm font-semibold mt-2 text-center truncate'>
+										{el.productName}
+									</h3>
+									<p className='text-red-500 font-bold text-center'>
+										{el.price}$
+									</p>
+									<p className='text-center text-xs text-yellow-500'>
+										⭐⭐⭐⭐⭐ (90)
+									</p>
+								</div>
+							</SwiperSlide>
+						)
+					})}
+				</Swiper>
+			</section>
 
 			<section className='flex md:justify-around flex-col md:flex-row items-center bg-black py-[40px] w-[90%] m-auto rounded-[10px] mt-[100px]'>
 				<aside className='flex flex-col gap-[30px] md:w-[30%] ml-[10px] px-[10px]'>
@@ -643,84 +639,84 @@ export default function Home() {
 					))}
 				</Swiper>
 			</section> */}
-					<section className='py-5 px-4 mt-[50px] max-w-[1400px] mx-auto'>
-  <Swiper
-    modules={[Navigation, Autoplay]}
-    slidesPerView={1.2}
-    spaceBetween={12}
-    navigation
-    loop={true}
-    autoplay={{
-      delay: 3000,
-      disableOnInteraction: false,
-    }}
-    breakpoints={{
-      360: { slidesPerView: 1.3, spaceBetween: 12 },
-      480: { slidesPerView: 1.8, spaceBetween: 14 },
-      640: { slidesPerView: 2.2, spaceBetween: 16 },
-      768: { slidesPerView: 3, spaceBetween: 20 },
-      1024: { slidesPerView: 4, spaceBetween: 24 },
-    }}
-  >
-    {prod?.map(el => {
-      const isWished = wishlist.some(item => item.id === el.id)
-      return (
-        <SwiperSlide key={el.id}>
-          <div className='p-4 border rounded-xl bg-white shadow-md w-[220px] sm:w-[250px] mx-auto hover:shadow-lg transition duration-300'>
-            <div className='flex justify-between items-center mb-2'>
-              <span className='bg-red-500 text-white px-3 py-1 rounded-lg text-xs'>
-                -40%
-              </span>
-              <div className='text-gray-600 flex flex-col items-center gap-1'>
-                {isWished ? (
-                  <FavoriteIcon
-                    sx={{ color: 'red' }}
-                    onClick={() => toggleWishList(el)}
-                    className='cursor-pointer hover:text-red-500'
-                  />
-                ) : (
-                  <FavoriteBorderIcon
-                    onClick={() => toggleWishList(el)}
-                    className='cursor-pointer hover:text-red-500'
-                  />
-                )}
-                <Link to={'/info/' + el.id}>
-                  <VisibilityIcon className='cursor-pointer hover:text-blue-500' />
-                </Link>
-              </div>
-            </div>
+			<section className='py-5 px-4 mt-[50px] max-w-[1400px] mx-auto'>
+				<Swiper
+					modules={[Navigation, Autoplay]}
+					slidesPerView={1.2}
+					spaceBetween={12}
+					navigation
+					loop={true}
+					autoplay={{
+						delay: 3000,
+						disableOnInteraction: false,
+					}}
+					breakpoints={{
+						360: { slidesPerView: 1.3, spaceBetween: 12 },
+						480: { slidesPerView: 1.8, spaceBetween: 14 },
+						640: { slidesPerView: 2.2, spaceBetween: 16 },
+						768: { slidesPerView: 3, spaceBetween: 20 },
+						1024: { slidesPerView: 4, spaceBetween: 24 },
+					}}
+				>
+					{prod?.map(el => {
+						const isWished = wishlist.some(item => item.id === el.id)
+						return (
+							<SwiperSlide key={el.id}>
+								<div className='p-4 border rounded-xl bg-white shadow-md w-[220px] sm:w-[250px] mx-auto hover:shadow-lg transition duration-300'>
+									<div className='flex justify-between items-center mb-2'>
+										<span className='bg-red-500 text-white px-3 py-1 rounded-lg text-xs'>
+											-40%
+										</span>
+										<div className='text-gray-600 flex flex-col items-center gap-1'>
+											{isWished ? (
+												<FavoriteIcon
+													sx={{ color: 'red' }}
+													onClick={() => toggleWishList(el)}
+													className='cursor-pointer hover:text-red-500'
+												/>
+											) : (
+												<FavoriteBorderIcon
+													onClick={() => toggleWishList(el)}
+													className='cursor-pointer hover:text-red-500'
+												/>
+											)}
+											<Link to={'/info/' + el.id}>
+												<VisibilityIcon className='cursor-pointer hover:text-blue-500' />
+											</Link>
+										</div>
+									</div>
 
-            <div className='flex flex-col items-center'>
-              <img
-                src={`http://37.27.29.18:8002/images/${el.image}`}
-                className='h-[140px] w-full object-contain mb-3'
-              />
-              <Button
-                variant='outlined'
-                color='inherit'
-                size='small'
-                onClick={() => handleAddToCart(el.id)}
-                className='!text-xs'
-              >
-                Add To Cart
-              </Button>
-            </div>
+									<div className='flex flex-col items-center'>
+										<img
+											src={`http://37.27.29.18:8002/images/${el.image}`}
+											className='h-[140px] w-full object-contain mb-3'
+										/>
+										<Button
+											variant='outlined'
+											color='inherit'
+											size='small'
+											onClick={() => handleAddToCart(el.id)}
+											className='!text-xs'
+										>
+											Add To Cart
+										</Button>
+									</div>
 
-            <h3 className='text-sm font-semibold mt-2 text-center truncate'>
-              {el.productName}
-            </h3>
-            <p className='text-red-500 font-bold text-center'>
-              {el.price}$
-            </p>
-            <p className='text-center text-xs text-yellow-500'>
-              ⭐⭐⭐⭐⭐ (90)
-            </p>
-          </div>
-        </SwiperSlide>
-      )
-    })}
-  </Swiper>
-</section>
+									<h3 className='text-sm font-semibold mt-2 text-center truncate'>
+										{el.productName}
+									</h3>
+									<p className='text-red-500 font-bold text-center'>
+										{el.price}$
+									</p>
+									<p className='text-center text-xs text-yellow-500'>
+										⭐⭐⭐⭐⭐ (90)
+									</p>
+								</div>
+							</SwiperSlide>
+						)
+					})}
+				</Swiper>
+			</section>
 
 			{/* <section className='py-5 px-4 mt-[50px] max-w-[1400px] mx-auto'>
 				<Swiper
@@ -789,84 +785,84 @@ export default function Home() {
 					))}
 				</Swiper>
 			</section> */}
-					<section className='py-5 px-4 mt-[50px] max-w-[1400px] mx-auto'>
-  <Swiper
-    modules={[Navigation, Autoplay]}
-    slidesPerView={1.2}
-    spaceBetween={12}
-    navigation
-    loop={true}
-    autoplay={{
-      delay: 3000,
-      disableOnInteraction: false,
-    }}
-    breakpoints={{
-      360: { slidesPerView: 1.3, spaceBetween: 12 },
-      480: { slidesPerView: 1.8, spaceBetween: 14 },
-      640: { slidesPerView: 2.2, spaceBetween: 16 },
-      768: { slidesPerView: 3, spaceBetween: 20 },
-      1024: { slidesPerView: 4, spaceBetween: 24 },
-    }}
-  >
-    {prod?.map(el => {
-      const isWished = wishlist.some(item => item.id === el.id)
-      return (
-        <SwiperSlide key={el.id}>
-          <div className='p-4 border rounded-xl bg-white shadow-md w-[220px] sm:w-[250px] mx-auto hover:shadow-lg transition duration-300'>
-            <div className='flex justify-between items-center mb-2'>
-              <span className='bg-red-500 text-white px-3 py-1 rounded-lg text-xs'>
-                -40%
-              </span>
-              <div className='text-gray-600 flex flex-col items-center gap-1'>
-                {isWished ? (
-                  <FavoriteIcon
-                    sx={{ color: 'red' }}
-                    onClick={() => toggleWishList(el)}
-                    className='cursor-pointer hover:text-red-500'
-                  />
-                ) : (
-                  <FavoriteBorderIcon
-                    onClick={() => toggleWishList(el)}
-                    className='cursor-pointer hover:text-red-500'
-                  />
-                )}
-                <Link to={'/info/' + el.id}>
-                  <VisibilityIcon className='cursor-pointer hover:text-blue-500' />
-                </Link>
-              </div>
-            </div>
+			<section className='py-5 px-4 mt-[50px] max-w-[1400px] mx-auto'>
+				<Swiper
+					modules={[Navigation, Autoplay]}
+					slidesPerView={1.2}
+					spaceBetween={12}
+					navigation
+					loop={true}
+					autoplay={{
+						delay: 3000,
+						disableOnInteraction: false,
+					}}
+					breakpoints={{
+						360: { slidesPerView: 1.3, spaceBetween: 12 },
+						480: { slidesPerView: 1.8, spaceBetween: 14 },
+						640: { slidesPerView: 2.2, spaceBetween: 16 },
+						768: { slidesPerView: 3, spaceBetween: 20 },
+						1024: { slidesPerView: 4, spaceBetween: 24 },
+					}}
+				>
+					{prod?.map(el => {
+						const isWished = wishlist.some(item => item.id === el.id)
+						return (
+							<SwiperSlide key={el.id}>
+								<div className='p-4 border rounded-xl bg-white shadow-md w-[220px] sm:w-[250px] mx-auto hover:shadow-lg transition duration-300'>
+									<div className='flex justify-between items-center mb-2'>
+										<span className='bg-red-500 text-white px-3 py-1 rounded-lg text-xs'>
+											-40%
+										</span>
+										<div className='text-gray-600 flex flex-col items-center gap-1'>
+											{isWished ? (
+												<FavoriteIcon
+													sx={{ color: 'red' }}
+													onClick={() => toggleWishList(el)}
+													className='cursor-pointer hover:text-red-500'
+												/>
+											) : (
+												<FavoriteBorderIcon
+													onClick={() => toggleWishList(el)}
+													className='cursor-pointer hover:text-red-500'
+												/>
+											)}
+											<Link to={'/info/' + el.id}>
+												<VisibilityIcon className='cursor-pointer hover:text-blue-500' />
+											</Link>
+										</div>
+									</div>
 
-            <div className='flex flex-col items-center'>
-              <img
-                src={`http://37.27.29.18:8002/images/${el.image}`}
-                className='h-[140px] w-full object-contain mb-3'
-              />
-              <Button
-                variant='outlined'
-                color='inherit'
-                size='small'
-                onClick={() => handleAddToCart(el.id)}
-                className='!text-xs'
-              >
-                Add To Cart
-              </Button>
-            </div>
+									<div className='flex flex-col items-center'>
+										<img
+											src={`http://37.27.29.18:8002/images/${el.image}`}
+											className='h-[140px] w-full object-contain mb-3'
+										/>
+										<Button
+											variant='outlined'
+											color='inherit'
+											size='small'
+											onClick={() => handleAddToCart(el.id)}
+											className='!text-xs'
+										>
+											Add To Cart
+										</Button>
+									</div>
 
-            <h3 className='text-sm font-semibold mt-2 text-center truncate'>
-              {el.productName}
-            </h3>
-            <p className='text-red-500 font-bold text-center'>
-              {el.price}$
-            </p>
-            <p className='text-center text-xs text-yellow-500'>
-              ⭐⭐⭐⭐⭐ (90)
-            </p>
-          </div>
-        </SwiperSlide>
-      )
-    })}
-  </Swiper>
-</section>
+									<h3 className='text-sm font-semibold mt-2 text-center truncate'>
+										{el.productName}
+									</h3>
+									<p className='text-red-500 font-bold text-center'>
+										{el.price}$
+									</p>
+									<p className='text-center text-xs text-yellow-500'>
+										⭐⭐⭐⭐⭐ (90)
+									</p>
+								</div>
+							</SwiperSlide>
+						)
+					})}
+				</Swiper>
+			</section>
 
 			<div className='flex justify-center mt-[100px]'>
 				<Link to='/products'>

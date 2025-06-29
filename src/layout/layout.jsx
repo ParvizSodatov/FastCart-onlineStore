@@ -36,7 +36,7 @@ export default function Layout() {
     localStorage.removeItem('token')
   }
 
-
+const token=localStorage.getItem('token')
 
    const [anchorEl2, setAnchorEl2] =useState(null);
   const open2 = Boolean(anchorEl2);
@@ -191,7 +191,7 @@ export default function Layout() {
         )}
       </Link>
     </div>
-    {/* ❤️ Wishlist – Мобайл */}
+   
     <div className='relative md:hidden hover:text-rose-500 transition-colors duration-300'>
       <Link to='/wishlist'>
         <FavoriteBorderIcon style={{ fontSize: '30px' }} />
@@ -204,7 +204,8 @@ export default function Layout() {
     </div>
 
     {/* 🛒 Корзина */}
-    <div className='relative hover:text-rose-500 transition-colors duration-300'>
+    {
+      token && <div className='relative hover:text-rose-500 transition-colors duration-300'>
       <Link to='/cart'>
         <ShoppingCartIcon style={{ fontSize: '30px' }} />
         {cart?.productsInCart?.length > 0 && (
@@ -214,9 +215,11 @@ export default function Layout() {
         )}
       </Link>
     </div>
+    }
 
     {/* 👤 Аккаунт */}
-    <div className='md:block hidden hover:text-rose-500 transition-colors duration-300'>
+   {
+    token &&  <div className='md:block hidden hover:text-rose-500 transition-colors duration-300'>
      <AccountCircleIcon
        sx={{fontSize:'30px'}}
         id="basic-button"
@@ -240,11 +243,9 @@ export default function Layout() {
       >
        <Link to='/acount'> <MenuItem onClick={handleCloseAcount}>My Acount</MenuItem></Link>
         <MenuItem onClick={LogOut}>Log Out</MenuItem>
-    
       </Menu>
-       
-    
     </div>
+   }
   </div>
 </nav>
 

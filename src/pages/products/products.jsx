@@ -17,7 +17,7 @@ import Button from '@mui/material/Button'
 import { useDispatch, useSelector } from 'react-redux'
 import { API } from '@/utils/config'
 import { addToCart } from '@/store/reducers/cartslice/reducer'
-import { Toaster } from 'sonner'
+import { toast, Toaster } from 'sonner'
 import { get } from '@/store/reducers/categories/reducer'
 import {
 	categotryFilter,
@@ -27,10 +27,14 @@ import {
 	priceFilter,
 	searchProduct,
 } from '@/store/reducers/product/reducer'
+import { Link, useNavigate } from 'react-router'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 
 export default function Products() {
 	const [age, setAge] = useState('')
 	const dispatch = useDispatch()
+
 	const handleChange = event => {
 		setAge(event.target.value)
 	}
@@ -49,11 +53,35 @@ export default function Products() {
 		}
 		dispatch(addToCart(id))
 	}
+
 	const [search, setSearch] = useState('')
 	function handleSearch(e) {
 		setSearch(e.target.value)
 		dispatch(searchProduct(e.target.value))
 	}
+
+	const navigate = useNavigate()
+	const wish = JSON.parse(localStorage.getItem('wish')) || []
+
+	function handleAddToWishList(prod) {
+		const findProduct = wish.find(e => e.id == prod.id)
+		if (findProduct) {
+			toast.error('Продукт ужэ в Wishlist')
+			
+		} else {
+			let product = {
+				id: prod.id,
+				productName: prod.productName,
+				image: prod.image,
+				price: prod.price,
+				categoryName: prod.categoryName,
+			}
+			wish.push(product)
+			localStorage.setItem('wish', JSON.stringify(wish))
+			toast.success('Успешно добавлено в WishList')
+		}
+	}
+
 	useEffect(() => {
 		dispatch(get())
 		dispatch(getProduct())
@@ -73,14 +101,13 @@ export default function Products() {
 					sx={{ width: '90%', margin: 'auto' }}
 					id='outlined-basic'
 					value={search}
-					onChange={(e)=>handleSearch(e)}
+					onChange={handleSearch}
 					label='Search Product'
 					variant='outlined'
 				/>
 			</div>
 
 			<section className='flex flex-wrap mt-[80px] items-start justify-center md:justify-start'>
-				{/* Sidebar */}
 				<aside className='w-[300px] m-auto'>
 					{/* Categories */}
 					<Accordion>
@@ -196,7 +223,6 @@ export default function Products() {
 					</Accordion>
 				</aside>
 
-				{/* Product Grid */}
 				<aside className='flex flex-wrap w-full md:w-[70%] gap-6 justify-center md:justify-start mt-[40px]'>
 					{prod?.length === 0 ? (
 						<p className='text-xl text-gray-500 font-semibold'>
@@ -212,11 +238,21 @@ export default function Products() {
 										: ''
 								}`}
 							>
-								<div className='flex justify-between items-center'>
-									<span className='bg-red-400 text-white px-[15px] py-[5px] rounded-[10px]'>
-										-10%
+								<div className='flex justify-between items-center mb-2'>
+									<span className='bg-red-500 text-white px-3 py-1 rounded-lg text-xs'>
+										-40%
 									</span>
+									<div className='flex flex-col items-center gap-1 text-gray-600'>
+										<FavoriteBorderIcon
+											onClick={() => handleAddToWishList(el)}
+											className='cursor-pointer hover:text-red-500'
+										/>
+										<Link to={'/info/' + el.id}>
+											<VisibilityIcon className='cursor-pointer hover:text-blue-500' />
+										</Link>
+									</div>
 								</div>
+
 								<div className='flex flex-col'>
 									<img
 										src={`${API}/images/${el.image}`}
@@ -241,7 +277,6 @@ export default function Products() {
 					)}
 				</aside>
 			</section>
-
 			<Toaster position='top-right' richColors />
 		</>
 	)

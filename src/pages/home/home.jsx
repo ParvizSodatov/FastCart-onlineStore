@@ -84,23 +84,34 @@ export default function Home() {
 		dispatch(get())
 		dispatch(getProduct())
 	}, [])
-	let navigate = useNavigate()
-	const wish = JSON.parse(localStorage.getItem('wish'))
+	// let navigate = useNavigate()
+	// const wish = JSON.parse(localStorage.getItem('wish'))
+	
 	// function handleAddToWishList(prod) {
-	// 	let product = {
-	// 		id: prod.id,
-	// 		productName: prod.productName,
-	// 		image: prod.image,
-	// 		price: prod.price,
-	// 		categoryName: prod.categoryName,
+	// 	if (!localStorage.getItem('token')) {
+	// 		toast.error('Продукт ужэ в Wishlist')
+			
+	// 	} else {
+	// 		let product = {
+	// 			id: prod.id,
+	// 			productName: prod.productName,
+	// 			image: prod.image,
+	// 			price: prod.price,
+	// 			categoryName: prod.categoryName,
+	// 		}
+	// 		wish.push(product)
+	// 		localStorage.setItem('wish', JSON.stringify(wish))
+	// 		toast.success('Успешно добавлено в WishLiist')
 	// 	}
-	// 	wish.push(product)
-	// 	localStorage.setItem('wish', JSON.stringify(wish))
 	// }
+		const navigate = useNavigate()
+	const wish = JSON.parse(localStorage.getItem('wish')) || []
+
 	function handleAddToWishList(prod) {
-		if (!localStorage.getItem('token')) {
-			alert('Please registrate or login❗️')
-			navigate('/login')
+		const findProduct = wish.find(e => e.id == prod.id)
+		if (findProduct) {
+			toast.error('Продукт ужэ в Wishlist')
+			
 		} else {
 			let product = {
 				id: prod.id,
@@ -111,7 +122,7 @@ export default function Home() {
 			}
 			wish.push(product)
 			localStorage.setItem('wish', JSON.stringify(wish))
-			toast.success('Успешно добавлено в WishLiist')
+			toast.success('Успешно добавлено в WishList')
 		}
 	}
 
@@ -302,6 +313,7 @@ export default function Home() {
 				>
 					{data?.map(item => (
 						<SwiperSlide key={item.id}>
+						<Link to={'/categoryById/'+item.id}>
 							<div className='bg-white rounded-xl border border-gray-300 shadow-sm flex flex-col items-center justify-center py-4 h-[180px] hover:shadow-md transition'>
 								<img
 									src={`http://37.27.29.18:8002/images/${item.categoryImage}`}
@@ -312,6 +324,7 @@ export default function Home() {
 									{item.categoryName}
 								</h1>
 							</div>
+						</Link>
 						</SwiperSlide>
 					))}
 				</Swiper>

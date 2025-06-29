@@ -7,10 +7,11 @@ import MenuIcon from '@mui/icons-material/Menu'
 import InstagramIcon from '@mui/icons-material/Instagram'
 import TwitterIcon from '@mui/icons-material/Twitter'
 import FacebookIcon from '@mui/icons-material/Facebook'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import { useDispatch, useSelector } from 'react-redux'
 import { searchProduct } from '@/store/reducers/product/reducer'
+import { getCart } from '@/store/reducers/cartslice/reducer'
 export default function Layout() {
 	const [anchorEl, setAnchorEl] = useState(null)
 	const open = Boolean(anchorEl)
@@ -46,7 +47,9 @@ const token=localStorage.getItem('token')
   const handleCloseAcount = () => {
     setAnchorEl2(null);
   };
-
+useEffect(()=>{
+  dispatch(getCart())
+},[])
 
 	return (
 		<>

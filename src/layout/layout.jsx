@@ -16,7 +16,7 @@ export default function Layout() {
 	const [anchorEl, setAnchorEl] = useState(null)
 	const open = Boolean(anchorEl)
 	const { cart } = useSelector(store => store.cart)
-	const product = JSON.parse(localStorage.getItem('wish'))
+	// const product = JSON.parse(localStorage.getItem('wish'))
   const [search,setSearch]=useState('')
 	const handleClick = event => {
 		setAnchorEl(event.currentTarget)
@@ -47,6 +47,9 @@ const token=localStorage.getItem('token')
   const handleCloseAcount = () => {
     setAnchorEl2(null);
   };
+
+
+   let product = useSelector((store)=>store.wishlist.items)
 useEffect(()=>{
   dispatch(getCart())
 },[])

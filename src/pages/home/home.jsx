@@ -39,43 +39,51 @@ import { get } from '@/store/reducers/categories/reducer'
 import { getProduct } from '@/store/reducers/product/reducer'
 import { addToCart } from '@/store/reducers/cartslice/reducer'
 import { toast, Toaster } from 'sonner'
+import {
+	addWishList,
+	removefromWishList,
+} from '@/store/reducers/wishlist/reducers'
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import Wishlist from '../wishlist/wishlist'
 export default function Home() {
 	const calculateTimeLeft = () => {
-    const targetDate = new Date('2025-07-01T00:00:00'); // замени на нужную дату
-    const now = new Date();
-    const difference = targetDate - now;
+		const targetDate = new Date('2025-07-01T00:00:00') // замени на нужную дату
+		const now = new Date()
+		const difference = targetDate - now
 
-    let timeLeft = {
-      days: '00',
-      hours: '00',
-      minutes: '00',
-      seconds: '00',
-    };
-	   if (difference > 0) {
-      timeLeft = {
-        days: String(Math.floor(difference / (1000 * 60 * 60 * 24))).padStart(2, '0'),
-        hours: String(Math.floor((difference / (1000 * 60 * 60)) % 24)).padStart(2, '0'),
-        minutes: String(Math.floor((difference / 1000 / 60) % 60)).padStart(2, '0'),
-        seconds: String(Math.floor((difference / 1000) % 60)).padStart(2, '0'),
-      };
-    }
-	    return timeLeft;
-  };
-    const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+		let timeLeft = {
+			days: '00',
+			hours: '00',
+			minutes: '00',
+			seconds: '00',
+		}
+		if (difference > 0) {
+			timeLeft = {
+				days: String(Math.floor(difference / (1000 * 60 * 60 * 24))).padStart(
+					2,
+					'0'
+				),
+				hours: String(
+					Math.floor((difference / (1000 * 60 * 60)) % 24)
+				).padStart(2, '0'),
+				minutes: String(Math.floor((difference / 1000 / 60) % 60)).padStart(
+					2,
+					'0'
+				),
+				seconds: String(Math.floor((difference / 1000) % 60)).padStart(2, '0'),
+			}
+		}
+		return timeLeft
+	}
+	const [timeLeft, setTimeLeft] = useState(calculateTimeLeft())
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
+	useEffect(() => {
+		const timer = setInterval(() => {
+			setTimeLeft(calculateTimeLeft())
+		}, 1000)
 
-    return () => clearInterval(timer);
-  }, []);
-
-
-
-
-
-
+		return () => clearInterval(timer)
+	}, [])
 
 	const { data } = useSelector(store => store.category)
 	const { prod } = useSelector(store => store.product)
@@ -84,48 +92,7 @@ export default function Home() {
 		dispatch(get())
 		dispatch(getProduct())
 	}, [])
-	// let navigate = useNavigate()
-	// const wish = JSON.parse(localStorage.getItem('wish'))
-	
-	// function handleAddToWishList(prod) {
-	// 	if (!localStorage.getItem('token')) {
-	// 		toast.error('Продукт ужэ в Wishlist')
-			
-	// 	} else {
-	// 		let product = {
-	// 			id: prod.id,
-	// 			productName: prod.productName,
-	// 			image: prod.image,
-	// 			price: prod.price,
-	// 			categoryName: prod.categoryName,
-	// 		}
-	// 		wish.push(product)
-	// 		localStorage.setItem('wish', JSON.stringify(wish))
-	// 		toast.success('Успешно добавлено в WishLiist')
-	// 	}
-	// }
-		const navigate = useNavigate()
-	const wish = JSON.parse(localStorage.getItem('wish')) || []
-
-	function handleAddToWishList(prod) {
-		const findProduct = wish.find(e => e.id == prod.id)
-		if (findProduct) {
-			toast.error('Продукт ужэ в Wishlist')
-			
-		} else {
-			let product = {
-				id: prod.id,
-				productName: prod.productName,
-				image: prod.image,
-				price: prod.price,
-				categoryName: prod.categoryName,
-			}
-			wish.push(product)
-			localStorage.setItem('wish', JSON.stringify(wish))
-			toast.success('Успешно добавлено в WishList')
-		}
-	}
-
+	const navigate = useNavigate()
 	function handleAddToCart(id) {
 		const token = localStorage.getItem('token')
 
@@ -136,6 +103,23 @@ export default function Home() {
 		}
 		dispatch(addToCart(id))
 	}
+
+	const wishlist = JSON.parse(localStorage.getItem('wishlist')) || []
+	const toggleWishList = product => {
+		if (localStorage.getItem('token') == null) {
+			alert('please login')
+			return
+		}
+		const exits =wishlist.some(item => item.id === product.id)
+		if (exits) {
+			dispatch(removefromWishList(product.id))
+			toast.error('Продукт удалён из WishList')
+		} else {
+			dispatch(addWishList(product))
+			toast.success('Добавлено в Wishlist')
+		}
+	}
+	// const exits =wishlist.some(item => item.id === product.id)
 	return (
 		<>
 			<section className='w-[100%] md:flex items-center justify-around md:mt-[50px] px-[10px]'>
@@ -143,27 +127,24 @@ export default function Home() {
 					{data?.map(el => (
 						<div className='py-[8px]'>
 							<p className='text[18px] text-gray-700 font-medium hover:text-blue-600 hover:underline cursor-pointer transition-all duration-200'>
-								<Link to={'/categoryById/'+el.id}>
-								{el.categoryName}
-								</Link>
+								<Link to={'/categoryById/' + el.id}>{el.categoryName}</Link>
 							</p>
 						</div>
 					))}
 				</div>
 				<div className='flex md:hidden overflow-x-auto whitespace-nowrap gap-2 px-2 mt-2'>
 					{data?.map(el => (
-						<Link to={'/categoryById/'+el.id}>
-						<span
-							key={el.id}
-							className='inline-block bg-gray-300 text-[16px] px-3 py-2 rounded cursor-pointer'
-							title={el.categoryName}
-						>
-							{el.categoryName}
-						</span>
+						<Link to={'/categoryById/' + el.id}>
+							<span
+								key={el.id}
+								className='inline-block bg-gray-300 text-[16px] px-3 py-2 rounded cursor-pointer'
+								title={el.categoryName}
+							>
+								{el.categoryName}
+							</span>
 						</Link>
 					))}
 				</div>
-				
 
 				<div className=' max-w-[900px]  px-[5px] md:px-0 mt-[10px]'>
 					<Swiper
@@ -188,35 +169,35 @@ export default function Home() {
 					</Swiper>
 				</div>
 			</section>
-			
-			 <section className='md:flex items-end md:ml-[80px] hidden mt-[60px]'>
-      <div className='text-[44px]'>
-        <h1 className='text-red-500'>Today’s</h1>
-        <h1>Flash Sales</h1>
-      </div>
-      <div className='flex justify-around items-center text-[44px] gap-[16px] md:ml-[50px]'>
-        <div className='text-center'>
-          <h1 className='text-[17px]'>Days</h1>
-          <h1>{timeLeft.days}</h1>
-        </div>
-        <h1>:</h1>
-        <div className='text-center'>
-          <h1 className='text-[17px]'>Hours</h1>
-          <h1>{timeLeft.hours}</h1>
-        </div>
-        <h1>:</h1>
-        <div className='text-center'>
-          <h1 className='text-[17px]'>Minutes</h1>
-          <h1>{timeLeft.minutes}</h1>
-        </div>
-        <h1>:</h1>
-        <div className='text-center'>
-          <h1 className='text-[17px]'>Seconds</h1>
-          <h1>{timeLeft.seconds}</h1>
-        </div>
-      </div>
-    </section>
-			<section className='py-5 px-4 mt-[50px] max-w-[1400px] mx-auto'>
+
+			<section className='md:flex items-end md:ml-[80px] hidden mt-[60px]'>
+				<div className='text-[44px]'>
+					<h1 className='text-red-500'>Today’s</h1>
+					<h1>Flash Sales</h1>
+				</div>
+				<div className='flex justify-around items-center text-[44px] gap-[16px] md:ml-[50px]'>
+					<div className='text-center'>
+						<h1 className='text-[17px]'>Days</h1>
+						<h1>{timeLeft.days}</h1>
+					</div>
+					<h1>:</h1>
+					<div className='text-center'>
+						<h1 className='text-[17px]'>Hours</h1>
+						<h1>{timeLeft.hours}</h1>
+					</div>
+					<h1>:</h1>
+					<div className='text-center'>
+						<h1 className='text-[17px]'>Minutes</h1>
+						<h1>{timeLeft.minutes}</h1>
+					</div>
+					<h1>:</h1>
+					<div className='text-center'>
+						<h1 className='text-[17px]'>Seconds</h1>
+						<h1>{timeLeft.seconds}</h1>
+					</div>
+				</div>
+			</section>
+			{/* <section className='py-5 px-4 mt-[50px] max-w-[1400px] mx-auto'>
 				<Swiper
 					modules={[Navigation, Autoplay]}
 					slidesPerView={1.2} // для маленького экрана — по 1.2 карточки
@@ -243,10 +224,20 @@ export default function Home() {
 										-40%
 									</span>
 									<div className='text-gray-600 flex flex-col items-center gap-1'>
-										<FavoriteBorderIcon
-											onClick={() => handleAddToWishList(el)}
+										{exits?(
+											<FavoriteIcon
+											sx={{color:'red'}}
+											onClick={() => toggleWishList(el)}
 											className='cursor-pointer hover:text-red-500'
 										/>
+										):(
+											<FavoriteBorderIcon
+											onClick={() => toggleWishList(el)}
+											className='cursor-pointer hover:text-red-500'
+										/>
+										)
+
+										}
 										<Link to={'/info/' + el.id}>
 											<VisibilityIcon className='cursor-pointer hover:text-blue-500' />
 										</Link>
@@ -282,7 +273,86 @@ export default function Home() {
 						</SwiperSlide>
 					))}
 				</Swiper>
-			</section>
+			</section> */}
+			<section className='py-5 px-4 mt-[50px] max-w-[1400px] mx-auto'>
+  <Swiper
+    modules={[Navigation, Autoplay]}
+    slidesPerView={1.2}
+    spaceBetween={12}
+    navigation
+    loop={true}
+    autoplay={{
+      delay: 3000,
+      disableOnInteraction: false,
+    }}
+    breakpoints={{
+      360: { slidesPerView: 1.3, spaceBetween: 12 },
+      480: { slidesPerView: 1.8, spaceBetween: 14 },
+      640: { slidesPerView: 2.2, spaceBetween: 16 },
+      768: { slidesPerView: 3, spaceBetween: 20 },
+      1024: { slidesPerView: 4, spaceBetween: 24 },
+    }}
+  >
+    {prod?.map(el => {
+      const isWished = wishlist.some(item => item.id === el.id)
+      return (
+        <SwiperSlide key={el.id}>
+          <div className='p-4 border rounded-xl bg-white shadow-md w-[220px] sm:w-[250px] mx-auto hover:shadow-lg transition duration-300'>
+            <div className='flex justify-between items-center mb-2'>
+              <span className='bg-red-500 text-white px-3 py-1 rounded-lg text-xs'>
+                -40%
+              </span>
+              <div className='text-gray-600 flex flex-col items-center gap-1'>
+                {isWished ? (
+                  <FavoriteIcon
+                    sx={{ color: 'red' }}
+                    onClick={() => toggleWishList(el)}
+                    className='cursor-pointer hover:text-red-500'
+                  />
+                ) : (
+                  <FavoriteBorderIcon
+                    onClick={() => toggleWishList(el)}
+                    className='cursor-pointer hover:text-red-500'
+                  />
+                )}
+                <Link to={'/info/' + el.id}>
+                  <VisibilityIcon className='cursor-pointer hover:text-blue-500' />
+                </Link>
+              </div>
+            </div>
+
+            <div className='flex flex-col items-center'>
+              <img
+                src={`http://37.27.29.18:8002/images/${el.image}`}
+                className='h-[140px] w-full object-contain mb-3'
+              />
+              <Button
+                variant='outlined'
+                color='inherit'
+                size='small'
+                onClick={() => handleAddToCart(el.id)}
+                className='!text-xs'
+              >
+                Add To Cart
+              </Button>
+            </div>
+
+            <h3 className='text-sm font-semibold mt-2 text-center truncate'>
+              {el.productName}
+            </h3>
+            <p className='text-red-500 font-bold text-center'>
+              {el.price}$
+            </p>
+            <p className='text-center text-xs text-yellow-500'>
+              ⭐⭐⭐⭐⭐ (90)
+            </p>
+          </div>
+        </SwiperSlide>
+      )
+    })}
+  </Swiper>
+</section>
+
 			<div className='flex justify-center mt-[100px]'>
 				<Link to='/products'>
 					<button className='relative overflow-hidden group bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold text-[18px] px-[60px] py-[12px]  shadow-lg hover:shadow-2xl transition duration-300'>
@@ -313,18 +383,18 @@ export default function Home() {
 				>
 					{data?.map(item => (
 						<SwiperSlide key={item.id}>
-						<Link to={'/categoryById/'+item.id}>
-							<div className='bg-white rounded-xl border border-gray-300 shadow-sm flex flex-col items-center justify-center py-4 h-[180px] hover:shadow-md transition'>
-								<img
-									src={`http://37.27.29.18:8002/images/${item.categoryImage}`}
-									alt=''
-									className='h-[70px] object-contain w-[100px]'
-								/>
-								<h1 className='text-[16px] font-semibold mt-3'>
-									{item.categoryName}
-								</h1>
-							</div>
-						</Link>
+							<Link to={'/categoryById/' + item.id}>
+								<div className='bg-white rounded-xl border border-gray-300 shadow-sm flex flex-col items-center justify-center py-4 h-[180px] hover:shadow-md transition'>
+									<img
+										src={`http://37.27.29.18:8002/images/${item.categoryImage}`}
+										alt=''
+										className='h-[70px] object-contain w-[100px]'
+									/>
+									<h1 className='text-[16px] font-semibold mt-3'>
+										{item.categoryName}
+									</h1>
+								</div>
+							</Link>
 						</SwiperSlide>
 					))}
 				</Swiper>
@@ -335,7 +405,7 @@ export default function Home() {
 				<h1 className='font-bold text-[30px] mt-[10]'>Best Selling Products</h1>
 			</div>
 
-			<section className='py-5 px-4 mt-[50px] max-w-[1400px] mx-auto'>
+			{/* <section className='py-5 px-4 mt-[50px] max-w-[1400px] mx-auto'>
 				<Swiper
 					modules={[Navigation, Autoplay]}
 					slidesPerView={1.2}
@@ -363,7 +433,7 @@ export default function Home() {
 									</span>
 									<div className='text-gray-600 flex flex-col items-center gap-1'>
 										<FavoriteBorderIcon
-											onClick={() => handleAddToWishList(el)}
+											onClick={() => toggleWishList(el)}
 											className='cursor-pointer hover:text-red-500'
 										/>
 										<Link to={'/info/' + el.id}>
@@ -371,7 +441,6 @@ export default function Home() {
 										</Link>
 									</div>
 								</div>
-
 								<div className='flex flex-col items-center'>
 									<img
 										src={`http://37.27.29.18:8002/images/${el.image}`}
@@ -401,7 +470,85 @@ export default function Home() {
 						</SwiperSlide>
 					))}
 				</Swiper>
-			</section>
+			</section> */}
+					<section className='py-5 px-4 mt-[50px] max-w-[1400px] mx-auto'>
+  <Swiper
+    modules={[Navigation, Autoplay]}
+    slidesPerView={1.2}
+    spaceBetween={12}
+    navigation
+    loop={true}
+    autoplay={{
+      delay: 3000,
+      disableOnInteraction: false,
+    }}
+    breakpoints={{
+      360: { slidesPerView: 1.3, spaceBetween: 12 },
+      480: { slidesPerView: 1.8, spaceBetween: 14 },
+      640: { slidesPerView: 2.2, spaceBetween: 16 },
+      768: { slidesPerView: 3, spaceBetween: 20 },
+      1024: { slidesPerView: 4, spaceBetween: 24 },
+    }}
+  >
+    {prod?.map(el => {
+      const isWished = wishlist.some(item => item.id === el.id)
+      return (
+        <SwiperSlide key={el.id}>
+          <div className='p-4 border rounded-xl bg-white shadow-md w-[220px] sm:w-[250px] mx-auto hover:shadow-lg transition duration-300'>
+            <div className='flex justify-between items-center mb-2'>
+              <span className='bg-red-500 text-white px-3 py-1 rounded-lg text-xs'>
+                -40%
+              </span>
+              <div className='text-gray-600 flex flex-col items-center gap-1'>
+                {isWished ? (
+                  <FavoriteIcon
+                    sx={{ color: 'red' }}
+                    onClick={() => toggleWishList(el)}
+                    className='cursor-pointer hover:text-red-500'
+                  />
+                ) : (
+                  <FavoriteBorderIcon
+                    onClick={() => toggleWishList(el)}
+                    className='cursor-pointer hover:text-red-500'
+                  />
+                )}
+                <Link to={'/info/' + el.id}>
+                  <VisibilityIcon className='cursor-pointer hover:text-blue-500' />
+                </Link>
+              </div>
+            </div>
+
+            <div className='flex flex-col items-center'>
+              <img
+                src={`http://37.27.29.18:8002/images/${el.image}`}
+                className='h-[140px] w-full object-contain mb-3'
+              />
+              <Button
+                variant='outlined'
+                color='inherit'
+                size='small'
+                onClick={() => handleAddToCart(el.id)}
+                className='!text-xs'
+              >
+                Add To Cart
+              </Button>
+            </div>
+
+            <h3 className='text-sm font-semibold mt-2 text-center truncate'>
+              {el.productName}
+            </h3>
+            <p className='text-red-500 font-bold text-center'>
+              {el.price}$
+            </p>
+            <p className='text-center text-xs text-yellow-500'>
+              ⭐⭐⭐⭐⭐ (90)
+            </p>
+          </div>
+        </SwiperSlide>
+      )
+    })}
+  </Swiper>
+</section>
 
 			<section className='flex md:justify-around flex-col md:flex-row items-center bg-black py-[40px] w-[90%] m-auto rounded-[10px] mt-[100px]'>
 				<aside className='flex flex-col gap-[30px] md:w-[30%] ml-[10px] px-[10px]'>
@@ -429,7 +576,7 @@ export default function Home() {
 				<h1 className='text-[50px]'>Explore Our Products</h1>
 			</div>
 
-			<section className='py-5 px-4 mt-[50px] max-w-[1400px] mx-auto'>
+			{/* <section className='py-5 px-4 mt-[50px] max-w-[1400px] mx-auto'>
 				<Swiper
 					modules={[Navigation, Autoplay]}
 					slidesPerView={1.2} // для маленького экрана — по 1.2 карточки
@@ -457,7 +604,7 @@ export default function Home() {
 									</span>
 									<div className='text-gray-600 flex flex-col items-center gap-1'>
 										<FavoriteBorderIcon
-											onClick={() => handleAddToWishList(el)}
+											onClick={() => toggleWishList(el)}
 											className='cursor-pointer hover:text-red-500'
 										/>
 										<Link to={'/info/' + el.id}>
@@ -495,9 +642,87 @@ export default function Home() {
 						</SwiperSlide>
 					))}
 				</Swiper>
-			</section>
+			</section> */}
+					<section className='py-5 px-4 mt-[50px] max-w-[1400px] mx-auto'>
+  <Swiper
+    modules={[Navigation, Autoplay]}
+    slidesPerView={1.2}
+    spaceBetween={12}
+    navigation
+    loop={true}
+    autoplay={{
+      delay: 3000,
+      disableOnInteraction: false,
+    }}
+    breakpoints={{
+      360: { slidesPerView: 1.3, spaceBetween: 12 },
+      480: { slidesPerView: 1.8, spaceBetween: 14 },
+      640: { slidesPerView: 2.2, spaceBetween: 16 },
+      768: { slidesPerView: 3, spaceBetween: 20 },
+      1024: { slidesPerView: 4, spaceBetween: 24 },
+    }}
+  >
+    {prod?.map(el => {
+      const isWished = wishlist.some(item => item.id === el.id)
+      return (
+        <SwiperSlide key={el.id}>
+          <div className='p-4 border rounded-xl bg-white shadow-md w-[220px] sm:w-[250px] mx-auto hover:shadow-lg transition duration-300'>
+            <div className='flex justify-between items-center mb-2'>
+              <span className='bg-red-500 text-white px-3 py-1 rounded-lg text-xs'>
+                -40%
+              </span>
+              <div className='text-gray-600 flex flex-col items-center gap-1'>
+                {isWished ? (
+                  <FavoriteIcon
+                    sx={{ color: 'red' }}
+                    onClick={() => toggleWishList(el)}
+                    className='cursor-pointer hover:text-red-500'
+                  />
+                ) : (
+                  <FavoriteBorderIcon
+                    onClick={() => toggleWishList(el)}
+                    className='cursor-pointer hover:text-red-500'
+                  />
+                )}
+                <Link to={'/info/' + el.id}>
+                  <VisibilityIcon className='cursor-pointer hover:text-blue-500' />
+                </Link>
+              </div>
+            </div>
 
-			<section className='py-5 px-4 mt-[50px] max-w-[1400px] mx-auto'>
+            <div className='flex flex-col items-center'>
+              <img
+                src={`http://37.27.29.18:8002/images/${el.image}`}
+                className='h-[140px] w-full object-contain mb-3'
+              />
+              <Button
+                variant='outlined'
+                color='inherit'
+                size='small'
+                onClick={() => handleAddToCart(el.id)}
+                className='!text-xs'
+              >
+                Add To Cart
+              </Button>
+            </div>
+
+            <h3 className='text-sm font-semibold mt-2 text-center truncate'>
+              {el.productName}
+            </h3>
+            <p className='text-red-500 font-bold text-center'>
+              {el.price}$
+            </p>
+            <p className='text-center text-xs text-yellow-500'>
+              ⭐⭐⭐⭐⭐ (90)
+            </p>
+          </div>
+        </SwiperSlide>
+      )
+    })}
+  </Swiper>
+</section>
+
+			{/* <section className='py-5 px-4 mt-[50px] max-w-[1400px] mx-auto'>
 				<Swiper
 					modules={[Navigation, Autoplay]}
 					slidesPerView={1.2} // для маленького экрана — по 1.2 карточки
@@ -525,7 +750,7 @@ export default function Home() {
 									</span>
 									<div className='text-gray-600 flex flex-col items-center gap-1'>
 										<FavoriteBorderIcon
-											onClick={() => handleAddToWishList(el)}
+											onClick={() => toggleWishList(el)}
 											className='cursor-pointer hover:text-red-500'
 										/>
 										<Link to={'/info/' + el.id}>
@@ -563,7 +788,85 @@ export default function Home() {
 						</SwiperSlide>
 					))}
 				</Swiper>
-			</section>
+			</section> */}
+					<section className='py-5 px-4 mt-[50px] max-w-[1400px] mx-auto'>
+  <Swiper
+    modules={[Navigation, Autoplay]}
+    slidesPerView={1.2}
+    spaceBetween={12}
+    navigation
+    loop={true}
+    autoplay={{
+      delay: 3000,
+      disableOnInteraction: false,
+    }}
+    breakpoints={{
+      360: { slidesPerView: 1.3, spaceBetween: 12 },
+      480: { slidesPerView: 1.8, spaceBetween: 14 },
+      640: { slidesPerView: 2.2, spaceBetween: 16 },
+      768: { slidesPerView: 3, spaceBetween: 20 },
+      1024: { slidesPerView: 4, spaceBetween: 24 },
+    }}
+  >
+    {prod?.map(el => {
+      const isWished = wishlist.some(item => item.id === el.id)
+      return (
+        <SwiperSlide key={el.id}>
+          <div className='p-4 border rounded-xl bg-white shadow-md w-[220px] sm:w-[250px] mx-auto hover:shadow-lg transition duration-300'>
+            <div className='flex justify-between items-center mb-2'>
+              <span className='bg-red-500 text-white px-3 py-1 rounded-lg text-xs'>
+                -40%
+              </span>
+              <div className='text-gray-600 flex flex-col items-center gap-1'>
+                {isWished ? (
+                  <FavoriteIcon
+                    sx={{ color: 'red' }}
+                    onClick={() => toggleWishList(el)}
+                    className='cursor-pointer hover:text-red-500'
+                  />
+                ) : (
+                  <FavoriteBorderIcon
+                    onClick={() => toggleWishList(el)}
+                    className='cursor-pointer hover:text-red-500'
+                  />
+                )}
+                <Link to={'/info/' + el.id}>
+                  <VisibilityIcon className='cursor-pointer hover:text-blue-500' />
+                </Link>
+              </div>
+            </div>
+
+            <div className='flex flex-col items-center'>
+              <img
+                src={`http://37.27.29.18:8002/images/${el.image}`}
+                className='h-[140px] w-full object-contain mb-3'
+              />
+              <Button
+                variant='outlined'
+                color='inherit'
+                size='small'
+                onClick={() => handleAddToCart(el.id)}
+                className='!text-xs'
+              >
+                Add To Cart
+              </Button>
+            </div>
+
+            <h3 className='text-sm font-semibold mt-2 text-center truncate'>
+              {el.productName}
+            </h3>
+            <p className='text-red-500 font-bold text-center'>
+              {el.price}$
+            </p>
+            <p className='text-center text-xs text-yellow-500'>
+              ⭐⭐⭐⭐⭐ (90)
+            </p>
+          </div>
+        </SwiperSlide>
+      )
+    })}
+  </Swiper>
+</section>
 
 			<div className='flex justify-center mt-[100px]'>
 				<Link to='/products'>

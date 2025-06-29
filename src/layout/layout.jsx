@@ -32,6 +32,21 @@ export default function Layout() {
     dispatch(searchProduct(e.target.value))
   }
 
+  function LogOut(){
+    localStorage.removeItem('token')
+  }
+
+
+
+   const [anchorEl2, setAnchorEl2] =useState(null);
+  const open2 = Boolean(anchorEl2);
+  const handleClickAcount = (event) => {
+    setAnchorEl2(event.currentTarget);
+  };
+  const handleCloseAcount = () => {
+    setAnchorEl2(null);
+  };
+
 
 	return (
 		<>
@@ -202,9 +217,33 @@ export default function Layout() {
 
     {/* 👤 Аккаунт */}
     <div className='md:block hidden hover:text-rose-500 transition-colors duration-300'>
-      <Link to='/acount'>
-        <AccountCircleIcon style={{ fontSize: '35px' }} />
-      </Link>
+     <AccountCircleIcon
+       sx={{fontSize:'30px'}}
+        id="basic-button"
+        aria-controls={open2 ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open2 ? 'true' : undefined}
+        onClick={handleClickAcount}
+      >
+        Dashboard
+      </AccountCircleIcon>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl2}
+        open={open2}
+        onClose={handleCloseAcount}
+        slotProps={{
+          list: {
+            'aria-labelledby': 'basic-button',
+          },
+        }}
+      >
+       <Link to='/acount'> <MenuItem onClick={handleCloseAcount}>My Acount</MenuItem></Link>
+        <MenuItem onClick={LogOut}>Log Out</MenuItem>
+    
+      </Menu>
+       
+    
     </div>
   </div>
 </nav>

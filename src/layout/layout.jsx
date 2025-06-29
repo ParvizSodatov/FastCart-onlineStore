@@ -1,4 +1,4 @@
-import { Link, Outlet } from 'react-router'
+import { Link, Outlet, useLocation } from 'react-router'
 import logo from '../assets/logo.png'
 import { Button, Menu, MenuItem, TextField } from '@mui/material'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
@@ -9,20 +9,29 @@ import TwitterIcon from '@mui/icons-material/Twitter'
 import FacebookIcon from '@mui/icons-material/Facebook'
 import { useState } from 'react'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import { useSelector } from 'react-redux'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { searchProduct } from '@/store/reducers/product/reducer'
 export default function Layout() {
 	const [anchorEl, setAnchorEl] = useState(null)
 	const open = Boolean(anchorEl)
 	const { cart } = useSelector(store => store.cart)
 	const product = JSON.parse(localStorage.getItem('wish'))
-
+  const [search,setSearch]=useState('')
 	const handleClick = event => {
 		setAnchorEl(event.currentTarget)
 	}
 	const handleClose = () => {
 		setAnchorEl(null)
 	}
+  const dispatch=useDispatch()
+  const location=useLocation()
+
+
+  function handleSearch(e){
+    setSearch(e.target.value)
+    dispatch(searchProduct(e.target.value))
+  }
+
 
 	return (
 		<>
@@ -136,10 +145,14 @@ export default function Layout() {
 
   {/* Иконки: поиск, wishlist, корзина, аккаунт */}
   <div className='flex items-center justify-center gap-[10px] w-[300px]'>
-    {/* 🔍 Поиск */}
-    <div className='md:block hidden'>
+
+    {location.pathname==='/products'&&(
+      <div className='md:block hidden'>
       <TextField
         label='search.....'
+        value={search}
+        onChange={(e)=>handleSearch(e)}
+
         variant='standard'
         sx={{
           '& .MuiInput-underline:after': {
@@ -148,6 +161,9 @@ export default function Layout() {
         }}
       />
     </div>
+    )
+
+    }
 
     {/* ❤️ Wishlist – Десктоп */}
     <div className='relative md:block hidden hover:text-rose-500 transition-colors duration-300'>
@@ -160,7 +176,6 @@ export default function Layout() {
         )}
       </Link>
     </div>
-
     {/* ❤️ Wishlist – Мобайл */}
     <div className='relative md:hidden hover:text-rose-500 transition-colors duration-300'>
       <Link to='/wishlist'>

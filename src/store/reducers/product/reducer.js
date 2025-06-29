@@ -59,6 +59,16 @@ export const filterBrands = createAsyncThunk(
 		}
 	}
 )
+
+export const searchProduct=createAsyncThunk('product/searchProduct',async (name) => {
+	try {
+		let {data}=await axiosStandart(`/Product/get-products?ProductName=${name}`)
+		return data.data.products
+	} catch (error) {
+		console.log(error);
+		
+	}
+})
 export const ProductSlice = createSlice({
 	name: 'product',
 	initialState: {
@@ -83,6 +93,9 @@ export const ProductSlice = createSlice({
 				state.brand = action.payload
 			})
 			.addCase(filterBrands.fulfilled, (state, action) => {
+				 state.prod = action.payload || [] 
+			})
+			.addCase(searchProduct.fulfilled, (state, action) => {
 				 state.prod = action.payload || [] 
 			})
 	},

@@ -25,6 +25,7 @@ import {
 	getbrand,
 	getProduct,
 	priceFilter,
+	searchProduct,
 } from '@/store/reducers/product/reducer'
 
 export default function Products() {
@@ -48,7 +49,11 @@ export default function Products() {
 		}
 		dispatch(addToCart(id))
 	}
-
+	const [search, setSearch] = useState('')
+	function handleSearch(e) {
+		setSearch(e.target.value)
+		dispatch(searchProduct(e.target.value))
+	}
 	useEffect(() => {
 		dispatch(get())
 		dispatch(getProduct())
@@ -61,7 +66,17 @@ export default function Products() {
 				<h1 className='md:block hidden'>
 					<span className='text-gray-400'>Home /</span> Explore our Products
 				</h1>
-				
+			</div>
+
+			<div className='w-[100%] flex justify-center md:hidden'>
+				<TextField
+					sx={{ width: '90%', margin: 'auto' }}
+					id='outlined-basic'
+					value={search}
+					onChange={(e)=>handleSearch(e)}
+					label='Search Product'
+					variant='outlined'
+				/>
 			</div>
 
 			<section className='flex flex-wrap mt-[80px] items-start justify-center md:justify-start'>
@@ -192,7 +207,9 @@ export default function Products() {
 							<div
 								key={el.id}
 								className={`p-4 border rounded-lg bg-white shadow-md w-[300px] max-h-96 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] ${
-									prod.length === 1 ? 'border-red-500 shadow-lg scale-[1.05]' : ''
+									prod.length === 1
+										? 'border-red-500 shadow-lg scale-[1.05]'
+										: ''
 								}`}
 							>
 								<div className='flex justify-between items-center'>

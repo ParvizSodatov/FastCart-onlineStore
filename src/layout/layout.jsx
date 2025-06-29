@@ -180,7 +180,7 @@ const token=localStorage.getItem('token')
 
     }
 
-    {/* ❤️ Wishlist – Десктоп */}
+    
     <div className='relative md:block hidden hover:text-rose-500 transition-colors duration-300'>
       <Link to='/wishlist'>
         <FavoriteBorderIcon style={{ fontSize: '30px' }} />

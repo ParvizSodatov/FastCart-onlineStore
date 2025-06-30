@@ -18,245 +18,244 @@ export default function Layout() {
 	const open = Boolean(anchorEl)
 	const { cart } = useSelector(store => store.cart)
 	// const product = JSON.parse(localStorage.getItem('wish'))
-  const [search,setSearch]=useState('')
+	const [search, setSearch] = useState('')
 	const handleClick = event => {
 		setAnchorEl(event.currentTarget)
 	}
 	const handleClose = () => {
 		setAnchorEl(null)
 	}
-  const dispatch=useDispatch()
-  const location=useLocation()
-  function handleSearch(e){
-    setSearch(e.target.value)
-    dispatch(searchProduct(e.target.value))
-  }
-  function LogOut(){
-    localStorage.removeItem('token')
-  }
-const token=localStorage.getItem('token')
-   const [anchorEl2, setAnchorEl2] =useState(null);
-  const open2 = Boolean(anchorEl2);
-  const handleClickAcount = (event) => {
-    setAnchorEl2(event.currentTarget);
-  };
-  const handleCloseAcount = () => {
-    setAnchorEl2(null);
-  };
-  const handleCloseAcount2 = () => {
-    setAnchorEl2(null);
-    LogOut()
-  };
+	const dispatch = useDispatch()
+	const location = useLocation()
+	function handleSearch(e) {
+		setSearch(e.target.value)
+		dispatch(searchProduct(e.target.value))
+	}
+	function LogOut() {
+		localStorage.removeItem('token')
+	}
+	const token = localStorage.getItem('token')
+	const [anchorEl2, setAnchorEl2] = useState(null)
+	const open2 = Boolean(anchorEl2)
+	const handleClickAcount = event => {
+		setAnchorEl2(event.currentTarget)
+	}
+	const handleCloseAcount = () => {
+		setAnchorEl2(null)
+	}
+	const handleCloseAcount2 = () => {
+		setAnchorEl2(null)
+		LogOut()
+	}
 
-   let product = useSelector((store)=>store.wishlist.items)
-useEffect(()=>{
-  dispatch(getCart())
-},[])
+	let product = useSelector(store => store.wishlist.items)
+	useEffect(() => {
+		dispatch(getCart())
+	}, [])
 	return (
 		<>
 			<nav className='fixed top-0 left-0 w-full z-50 bg-white shadow-md flex md:justify-around items-center py-4'>
-  {/* Мобайл: меню и логотип */}
-  <div className='flex items-center md:hidden ml-[20px] gap-[10px]'>
-    <div>
-      <Button
-        id='basic-button'
-        aria-controls={open ? 'basic-menu' : undefined}
-        aria-haspopup='true'
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
-        sx={{
-          '&:hover': {
-            backgroundColor: 'transparent',
-            color: '#f43f5e',
-          },
-        }}
-      >
-        <MenuIcon style={{ fontSize: '45px', color: 'black' }} />
-      </Button>
-      <Menu
-        id='basic-menu'
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        slotProps={{
-          list: {
-            'aria-labelledby': 'basic-button',
-          },
-        }}
-      >
-        <Link to='/'>
-          <MenuItem
-            onClick={handleClose}
-            sx={{
-              '&:hover': {
-                backgroundColor: '#f43f5e',
-                color: 'white',
-              },
-            }}
-          >
-            Home
-          </MenuItem>
-        </Link>
-        <Link to='/acount'>
-          <MenuItem
-            onClick={handleClose}
-            sx={{
-              '&:hover': {
-                backgroundColor: '#f43f5e',
-                color: 'white',
-              },
-            }}
-          >
-            My account
-          </MenuItem>
-        </Link>
-        <Link to='/signUp'>
-          <MenuItem
-            onClick={handleClose}
-            sx={{
-              '&:hover': {
-                backgroundColor: '#f43f5e',
-                color: 'white',
-              },
-            }}
-          >
-            SignUp
-          </MenuItem>
-        </Link>
-        <Link to='/about'>
-          <MenuItem
-            onClick={handleClose}
-            sx={{
-              '&:hover': {
-                backgroundColor: '#f43f5e',
-                color: 'white',
-              },
-            }}
-          >
-            About
-          </MenuItem>
-        </Link>
-      </Menu>
-    </div>
-    <h1 className='text-[35px] font-bold hover:text-rose-500 transition-colors duration-300'>
-      Exclusive
-    </h1>
-  </div>
+				{/* Мобайл: меню и логотип */}
+				<div className='flex items-center md:hidden ml-[20px] gap-[10px]'>
+					<div>
+						<Button
+							id='basic-button'
+							aria-controls={open ? 'basic-menu' : undefined}
+							aria-haspopup='true'
+							aria-expanded={open ? 'true' : undefined}
+							onClick={handleClick}
+							sx={{
+								'&:hover': {
+									backgroundColor: 'transparent',
+									color: '#f43f5e',
+								},
+							}}
+						>
+							<MenuIcon style={{ fontSize: '45px', color: 'black' }} />
+						</Button>
+						<Menu
+							id='basic-menu'
+							anchorEl={anchorEl}
+							open={open}
+							onClose={handleClose}
+							slotProps={{
+								list: {
+									'aria-labelledby': 'basic-button',
+								},
+							}}
+						>
+							<Link to='/'>
+								<MenuItem
+									onClick={handleClose}
+									sx={{
+										'&:hover': {
+											backgroundColor: '#f43f5e',
+											color: 'white',
+										},
+									}}
+								>
+									Home
+								</MenuItem>
+							</Link>
+							<Link to='/acount'>
+								<MenuItem
+									onClick={handleClose}
+									sx={{
+										'&:hover': {
+											backgroundColor: '#f43f5e',
+											color: 'white',
+										},
+									}}
+								>
+									My account
+								</MenuItem>
+							</Link>
+							<Link to='/signUp'>
+								<MenuItem
+									onClick={handleClose}
+									sx={{
+										'&:hover': {
+											backgroundColor: '#f43f5e',
+											color: 'white',
+										},
+									}}
+								>
+									SignUp
+								</MenuItem>
+							</Link>
+							<Link to='/about'>
+								<MenuItem
+									onClick={handleClose}
+									sx={{
+										'&:hover': {
+											backgroundColor: '#f43f5e',
+											color: 'white',
+										},
+									}}
+								>
+									About
+								</MenuItem>
+							</Link>
+						</Menu>
+					</div>
+					<h1 className='text-[35px] font-bold hover:text-rose-500 transition-colors duration-300'>
+						Exclusive
+					</h1>
+				</div>
 
-  {/* Десктоп: логотип */}
-  <img className='h-[7vh] md:block hidden' src={logo} alt='logo' />
+				{/* Десктоп: логотип */}
+				<img className='h-[7vh] md:block hidden' src={logo} alt='logo' />
 
-  {/* Десктоп: навигация */}
-  <div className='md:flex justify-center gap-[30px] hidden'>
-    <p className='text-[20px] hover:text-rose-500 transition-colors duration-300'>
-      <Link to='/'>Home</Link>
-    </p>
-    <p className='text-[20px] hover:text-rose-500 transition-colors duration-300'>
-      <Link to='/about'>About</Link>
-    </p>
-    <p className='text-[20px] hover:text-rose-500 transition-colors duration-300'>
-      <Link to='/contact'>Contact</Link>
-    </p>
-    <p className='text-[20px] hover:text-rose-500 transition-colors duration-300'>
-      <Link to='/signUp'>SignUp</Link>
-    </p>
-  </div>
+				{/* Десктоп: навигация */}
+				<div className='md:flex justify-center gap-[30px] hidden'>
+					<p className='text-[20px] hover:text-rose-500 transition-colors duration-300'>
+						<Link to='/'>Home</Link>
+					</p>
+					<p className='text-[20px] hover:text-rose-500 transition-colors duration-300'>
+						<Link to='/about'>About</Link>
+					</p>
+					<p className='text-[20px] hover:text-rose-500 transition-colors duration-300'>
+						<Link to='/contact'>Contact</Link>
+					</p>
+					<p className='text-[20px] hover:text-rose-500 transition-colors duration-300'>
+						<Link to='/signUp'>SignUp</Link>
+					</p>
+				</div>
 
-  {/* Иконки: поиск, wishlist, корзина, аккаунт */}
-  <div className='flex items-center justify-center gap-[10px] w-[300px]'>
+				{/* Иконки: поиск, wishlist, корзина, аккаунт */}
+				<div className='flex items-center justify-center gap-[10px] w-[300px]'>
+					{location.pathname === '/products' && (
+						<div className='md:block hidden'>
+							<TextField
+								label='search.....'
+								value={search}
+								onChange={e => handleSearch(e)}
+								variant='standard'
+								sx={{
+									'& .MuiInput-underline:after': {
+										borderBottomColor: '#f43f5e',
+									},
+								}}
+							/>
+						</div>
+					)}
+					{token && (
+						<div className='relative md:block hidden hover:text-rose-500 transition-colors duration-300'>
+							<Link to='/wishlist'>
+								<FavoriteBorderIcon style={{ fontSize: '30px' }} />
+								{product != '' && product != null && product.length > 0 && (
+									<span className='absolute -top-2 -right-2 bg-red-500 text-white text-[12px] font-semibold rounded-full w-[20px] h-[20px] flex items-center justify-center shadow-md'>
+										{product.length}
+									</span>
+								)}
+							</Link>
+						</div>
+					)}
+					{!token && (
+						<Link to='/logIn'>
+							<Button variant='outlined'>Log IN</Button>
+						</Link>
+					)}
 
-    {location.pathname==='/products'&&(
-      <div className='md:block hidden'>
-      <TextField
-        label='search.....'
-        value={search}
-        onChange={(e)=>handleSearch(e)}
+					<div className='relative md:hidden hover:text-rose-500 transition-colors duration-300'>
+						<Link to='/wishlist'>
+							<FavoriteBorderIcon style={{ fontSize: '30px' }} />
+							{product != '' && product != null && product.length > 0 && (
+								<span className='absolute -top-2 -right-2 bg-red-500 text-white text-[12px] font-semibold rounded-full w-[20px] h-[20px] flex items-center justify-center shadow-md'>
+									{product.length}
+								</span>
+							)}
+						</Link>
+					</div>
 
-        variant='standard'
-        sx={{
-          '& .MuiInput-underline:after': {
-            borderBottomColor: '#f43f5e',
-          },
-        }}
-      />
-    </div>
-    )
+					{/* 🛒 Корзина */}
+					{token && (
+						<div className='relative hover:text-rose-500 transition-colors duration-300'>
+							<Link to='/cart'>
+								<ShoppingCartIcon style={{ fontSize: '30px' }} />
+								{cart?.productsInCart?.length > 0 && (
+									<span className='absolute -top-2 -right-2 bg-red-500 text-white text-[12px] font-semibold rounded-full w-[20px] h-[20px] flex items-center justify-center shadow-md'>
+										{cart.productsInCart.length}
+									</span>
+								)}
+							</Link>
+						</div>
+					)}
 
-    }
-
-    
-   {
-    token && <div className='relative md:block hidden hover:text-rose-500 transition-colors duration-300'>
-      <Link to='/wishlist'>
-        <FavoriteBorderIcon style={{ fontSize: '30px' }} />
-        {product != '' && product != null && product.length > 0 && (
-          <span className='absolute -top-2 -right-2 bg-red-500 text-white text-[12px] font-semibold rounded-full w-[20px] h-[20px] flex items-center justify-center shadow-md'>
-            {product.length}
-          </span>
-        )}
-      </Link>
-    </div>
-   }
-   {
-    !token && <Link to='/logIn'><Button variant="outlined">Log IN</Button></Link>
-   }
-   
-    <div className='relative md:hidden hover:text-rose-500 transition-colors duration-300'>
-      <Link to='/wishlist'>
-        <FavoriteBorderIcon style={{ fontSize: '30px' }} />
-        {product != '' && product != null && product.length > 0 && (
-          <span className='absolute -top-2 -right-2 bg-red-500 text-white text-[12px] font-semibold rounded-full w-[20px] h-[20px] flex items-center justify-center shadow-md'>
-            {product.length}
-          </span>
-        )}
-      </Link>
-    </div>
-
-    {/* 🛒 Корзина */}
-    {
-      token && <div className='relative hover:text-rose-500 transition-colors duration-300'>
-      <Link to='/cart'>
-        <ShoppingCartIcon style={{ fontSize: '30px' }} />
-        {cart?.productsInCart?.length > 0 && (
-          <span className='absolute -top-2 -right-2 bg-red-500 text-white text-[12px] font-semibold rounded-full w-[20px] h-[20px] flex items-center justify-center shadow-md'>
-            {cart.productsInCart.length}
-          </span>
-        )}
-      </Link>
-    </div>
-    }
-
-    {/* 👤 Аккаунт */}
-   {
-    token &&  <div className='md:block hidden hover:text-rose-500 transition-colors duration-300'>
-     <AccountCircleIcon
-       sx={{fontSize:'30px'}}
-        id="basic-button"
-        aria-controls={open2 ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open2 ? 'true' : undefined}
-        onClick={handleClickAcount}
-      >
-        Dashboard
-      </AccountCircleIcon>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl2}
-        open={open2}
-        onClose={handleCloseAcount}
-        slotProps={{
-          list: {
-            'aria-labelledby': 'basic-button',
-          },
-        }}
-      >
-       <Link to='/acount'> <MenuItem onClick={handleCloseAcount}>My Acount</MenuItem></Link>
-        <MenuItem onClick={handleCloseAcount2}>Log Out</MenuItem>
-      </Menu>
-    </div>
-   }
-  </div>
-</nav>
+					{/* 👤 Аккаунт */}
+					{token && (
+						<div className='md:block hidden hover:text-rose-500 transition-colors duration-300'>
+							<AccountCircleIcon
+								sx={{ fontSize: '30px' }}
+								id='basic-button'
+								aria-controls={open2 ? 'basic-menu' : undefined}
+								aria-haspopup='true'
+								aria-expanded={open2 ? 'true' : undefined}
+								onClick={handleClickAcount}
+							>
+								Dashboard
+							</AccountCircleIcon>
+							<Menu
+								id='basic-menu'
+								anchorEl={anchorEl2}
+								open={open2}
+								onClose={handleCloseAcount}
+								slotProps={{
+									list: {
+										'aria-labelledby': 'basic-button',
+									},
+								}}
+							>
+								<Link to='/acount'>
+									{' '}
+									<MenuItem onClick={handleCloseAcount}>My Acount</MenuItem>
+								</Link>
+								<MenuItem onClick={handleCloseAcount2}>Log Out</MenuItem>
+							</Menu>
+						</div>
+					)}
+				</div>
+			</nav>
 			<main className='pt-[80px]'>
 				<Outlet />
 			</main>
@@ -285,12 +284,23 @@ useEffect(()=>{
 						<p className='text-sm'>+88015-88888-9999</p>
 					</div>
 					<div>
-				<Link to='/acount'><h2 className='text-lg font-bold mb-4'>Account</h2></Link>
+						<Link to='/acount'>
+							<h2 className='text-lg font-bold mb-4'>Account</h2>
+						</Link>
 						<ul className='space-y-1 text-sm'>
-						<Link to='/acount'><li>My Account</li></Link>
-							<Link to='/cart'><li>Cart</li></Link>
-						  <Link to='/wishlist'><li >Wishlist</li></Link>
-						<Link to='/products'>	<li>Shop</li></Link>
+							<Link to='/acount'>
+								<li>My Account</li>
+							</Link>
+							<Link to='/cart'>
+								<li>Cart</li>
+							</Link>
+							<Link to='/wishlist'>
+								<li>Wishlist</li>
+							</Link>
+							<Link to='/products'>
+								{' '}
+								<li>Shop</li>
+							</Link>
 						</ul>
 					</div>
 
@@ -307,9 +317,15 @@ useEffect(()=>{
 					<div>
 						<h2 className='text-lg font-bold mb-4'>Social</h2>
 						<div className='flex space-x-4 text-xl'>
-							<i><FacebookIcon /></i>
-							<i><TwitterIcon /></i>
-							<i><InstagramIcon /></i>
+							<i>
+								<FacebookIcon />
+							</i>
+							<i>
+								<TwitterIcon />
+							</i>
+							<i>
+								<InstagramIcon />
+							</i>
 							<i>in</i>
 						</div>
 					</div>

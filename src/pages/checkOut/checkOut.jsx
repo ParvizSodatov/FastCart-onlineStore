@@ -1,5 +1,6 @@
 import { TextField } from '@mui/material'
 import computer from '@/assets/computer.png'
+import { Toaster } from 'sonner'
 export default function Checkout(){
 	return <>
 		<div className='ml-[60px] mt-[60px] text-[30px]'>
@@ -62,10 +63,7 @@ export default function Checkout(){
       <input type="radio" name="payment" id="bank" className="accent-black" />
       <label htmlFor="bank" className="text-sm">Bank</label>
       <div className="flex items-center gap-1 ml-4">
-        {/* <img src="/visa.png" className="w-6" />
-        <img src="/mastercard.png" className="w-6" />
-        <img src="/bkash.png" className="w-6" />
-        <img src="/nagad.png" className="w-6" /> */}
+
       </div>
     </div>
     <div className="flex items-center gap-2">
@@ -92,5 +90,6 @@ export default function Checkout(){
 </div>
 	
 			</section>
+      <Toaster position='top-right' richColors />
 	</>
 }

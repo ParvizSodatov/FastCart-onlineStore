@@ -3,6 +3,7 @@ import { API } from '@/utils/config'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart } from '@/store/reducers/cartslice/reducer'
 import { Toaster } from 'sonner'
+import { removefromWishList } from '@/store/reducers/wishlist/reducers'
 export default function Wishlist() {
   let product = useSelector((store)=>store.wishlist.items)
   console.log('prod',product);
@@ -21,6 +22,7 @@ export default function Wishlist() {
         <p className='text-[30px] font-semibold'>Wishlist ({product.length})</p>
       </div>
       <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-screen-xl mx-auto px-4 mt-10'>
+       
         {product?.map(el => (
           <div
             key={el.id}

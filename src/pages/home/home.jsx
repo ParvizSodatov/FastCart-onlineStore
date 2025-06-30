@@ -159,9 +159,6 @@ export default function Home() {
 						<SwiperSlide>
 							<img src={xiaomi} alt='Фото 3' className='w-full rounded-xl md:h-[53vh] h-[25vh]' />
 						</SwiperSlide>
-						<SwiperSlide>
-							<img src={sony} alt='Фото 3' className='w-full rounded-xl md:h-[53vh] h-[25vh] aspect-ratio ' />
-						</SwiperSlide>
 					</Swiper>
 				</div>
 			</section>

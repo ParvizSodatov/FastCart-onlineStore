@@ -7,7 +7,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 export default function Cart() {
 	const dispatch = useDispatch()
 	const { cart } = useSelector(store => store.cart)
-
 	useEffect(() => {
 		dispatch(getCart())
 	}, [])

@@ -7,9 +7,6 @@ export const getCart = createAsyncThunk('cart/getCart', async () => {
 	// const token = localStorage.getItem('token')
 	const { data } = await axiosRequest.get(
 		'/Cart/get-products-from-cart',
-		// {
-		// 	headers: { Authorization: `Bearer ${token}` },
-		// }
 	)
 	return data.data[0]
 })
@@ -45,6 +42,7 @@ export const deletFromCart = createAsyncThunk(
 				// }
 			)
 			dispatch(getCart())
+			toast.info('Удалено из корзины')
 		} catch (error) {
 			console.log(error)
 		}

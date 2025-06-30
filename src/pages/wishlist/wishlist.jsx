@@ -3,20 +3,10 @@ import { API } from '@/utils/config'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart } from '@/store/reducers/cartslice/reducer'
 import { Toaster } from 'sonner'
-
 export default function Wishlist() {
   let product = useSelector((store)=>store.wishlist.items)
   console.log('prod',product);
-  
-    // function handleDeletWishlist(id){
-    //   product=product.filter((el)=>el.id!=id)
-    //   localStorage.setItem('wish',JSON.stringify(product))
-    //   window.location.reload()
-    //   // console.log(id);  
-    // }
-  // console.log('Wishlist:', product)
   const dispatch = useDispatch()
-
   function handleAddToCart(id) {
     const token = localStorage.getItem('token')
     if (!token) {
@@ -25,13 +15,11 @@ export default function Wishlist() {
     }
     dispatch(addToCart(id))
   }
-
   return (
     <>
       <div className='flex justify-between items-center mx-auto max-w-screen-xl px-4 mt-[30px]'>
         <p className='text-[30px] font-semibold'>Wishlist ({product.length})</p>
       </div>
-
       <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-screen-xl mx-auto px-4 mt-10'>
         {product?.map(el => (
           <div

@@ -3,14 +3,13 @@ import axios from 'axios'
 
 export const getProductById = createAsyncThunk(
 	'productById/getProductById',
-	async (id) => {
+	async id => {
 		try {
 			let { data } = await axios.get(
 				`http://37.27.29.18:8002/Product/get-product-by-id?id=${id}`
 			)
-			console.log('data',data)
-      return data.data	
-			
+			console.log('data', data)
+			return data.data
 		} catch (error) {
 			console.log(error)
 		}
@@ -19,15 +18,13 @@ export const getProductById = createAsyncThunk(
 export const productByidSlice = createSlice({
 	name: 'productById',
 	initialState: {
-		prodId:{}
+		prodId: {},
 	},
 	reducers: {},
-	extraReducers:(builder)=>{
-		builder.addCase(getProductById.fulfilled,(state,action)=>{
-			state.prodId=action.payload
+	extraReducers: builder => {
+		builder.addCase(getProductById.fulfilled, (state, action) => {
+			state.prodId = action.payload
 		})
-	}
+	},
 })
 export default productByidSlice.reducer
-
-

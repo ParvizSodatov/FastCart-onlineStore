@@ -12,6 +12,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import { useDispatch, useSelector } from 'react-redux'
 import { searchProduct } from '@/store/reducers/product/reducer'
 import { getCart } from '@/store/reducers/cartslice/reducer'
+import { Logout } from '@mui/icons-material'
 export default function Layout() {
 	const [anchorEl, setAnchorEl] = useState(null)
 	const open = Boolean(anchorEl)
@@ -42,6 +43,11 @@ const token=localStorage.getItem('token')
   const handleCloseAcount = () => {
     setAnchorEl2(null);
   };
+  const handleCloseAcount2 = () => {
+    setAnchorEl2(null);
+    LogOut()
+  };
+
    let product = useSelector((store)=>store.wishlist.items)
 useEffect(()=>{
   dispatch(getCart())
@@ -192,7 +198,7 @@ useEffect(()=>{
     </div>
    }
    {
-    !token && <Link to='/LogIn'><Button variant="outlined">Log IN</Button></Link>
+    !token && <Link to='/logIn'><Button variant="outlined">Log IN</Button></Link>
    }
    
     <div className='relative md:hidden hover:text-rose-500 transition-colors duration-300'>
@@ -245,18 +251,15 @@ useEffect(()=>{
         }}
       >
        <Link to='/acount'> <MenuItem onClick={handleCloseAcount}>My Acount</MenuItem></Link>
-        <MenuItem onClick={LogOut}>Log Out</MenuItem>
+        <MenuItem onClick={handleCloseAcount2}>Log Out</MenuItem>
       </Menu>
     </div>
    }
   </div>
 </nav>
-
-
 			<main className='pt-[80px]'>
 				<Outlet />
 			</main>
-
 			<footer className='bg-black text-white px-4 md:px-20 py-10 mt-[70px]'>
 				<div className='max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8'>
 					<div>
@@ -274,7 +277,6 @@ useEffect(()=>{
 							</button>
 						</div>
 					</div>
-
 					<div>
 						<h2 className='text-lg font-bold mb-4'>Support</h2>
 						<p className='text-sm mb-1'>111 Bijoy sarani, Dhaka,</p>
@@ -282,14 +284,13 @@ useEffect(()=>{
 						<p className='text-sm mb-1 mt-2'>exclusive@gmail.com</p>
 						<p className='text-sm'>+88015-88888-9999</p>
 					</div>
-
 					<div>
-						<h2 className='text-lg font-bold mb-4'>Account</h2>
+				<Link to='/acount'><h2 className='text-lg font-bold mb-4'>Account</h2></Link>
 						<ul className='space-y-1 text-sm'>
-							<li>My Account</li>
-							<li>Cart</li>
-							<li>Wishlist</li>
-							<li>Shop</li>
+						<Link to='/acount'><li>My Account</li></Link>
+							<Link to='/cart'><li>Cart</li></Link>
+						  <Link to='/wishlist'><li >Wishlist</li></Link>
+						<Link to='/products'>	<li>Shop</li></Link>
 						</ul>
 					</div>
 

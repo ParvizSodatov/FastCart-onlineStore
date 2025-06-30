@@ -1,6 +1,8 @@
 import { TextField } from '@mui/material'
 import computer from '@/assets/computer.png'
+import jostik from '@/assets/jostik.png'
 import { Toaster } from 'sonner'
+
 export default function Checkout(){
 	return <>
 		<div className='ml-[60px] mt-[60px] text-[30px]'>
@@ -34,7 +36,7 @@ export default function Checkout(){
     </div>
     <div className="flex justify-between items-center">
       <div className="flex items-center gap-2">
-        <img src={computer} alt="Gamepad" className="w-[50px] h-[50px] object-contain" />
+        <img src={jostik} alt="Gamepad" className="w-[50px] h-[50px] object-contain" />
         <span className="text-sm font-medium">H1 Gamepad</span>
       </div>
       <p className="text-sm font-semibold">$1100</p>

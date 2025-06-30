@@ -193,7 +193,7 @@ export default function Layout() {
 					)}
 					{!token && (
 						<Link to='/logIn'>
-							<Button variant='outlined'>Log IN</Button>
+							<Button variant='outlined'>Log In</Button>
 						</Link>
 					)}
 

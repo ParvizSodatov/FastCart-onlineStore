@@ -68,6 +68,29 @@ export const clearCart = createAsyncThunk(
 		}
 	}
 )
+export const increase=createAsyncThunk('cart/increase',async (id,{dispatch}) => {
+	try {
+		await axiosRequest.put(`/Cart/increase-product-in-cart?id=${id}`)
+		dispatch(getCart())
+	} catch (error) {
+		console.log(error);
+		
+	}
+})
+
+export const decrease=createAsyncThunk('cart/increase',async (id,{dispatch}) => {
+	try {
+		await axiosRequest.put(`/Cart/reduce-product-in-cart?id=${id}`)
+		dispatch(getCart())
+	} catch (error) {
+		console.log(error);
+		
+	}
+})
+
+
+
+
 
 export const cartSlice = createSlice({
 	name: 'cart',

@@ -380,7 +380,7 @@ export default function Home() {
 					{data?.map(item => (
 						<SwiperSlide key={item.id}>
 							<Link to={'/categoryById/' + item.id}>
-								<div className='bg-white rounded-xl border border-gray-300 shadow-sm flex flex-col items-center justify-center py-4 h-[180px] hover:shadow-md transition'>
+								<div className='bg-white rounded-xl border border-gray-300 shadow-sm flex flex-col items-center justify-center py-4 h-[180px]  hover:scale-105 transition-transform duration-300'>
 									<img
 										src={`http://37.27.29.18:8002/images/${item.categoryImage}`}
 										alt=''

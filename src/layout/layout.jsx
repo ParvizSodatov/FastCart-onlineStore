@@ -142,11 +142,9 @@ export default function Layout() {
 						Exclusive
 					</h1>
 				</div>
-
-				{/* Десктоп: логотип */}
-				<img className='h-[7vh] md:block hidden' src={logo} alt='logo' />
-
-				{/* Десктоп: навигация */}
+				<Link to='/'>
+					<img className='h-[7vh] md:block hidden' src={logo} alt='logo' />
+				</Link>
 				<div className='md:flex justify-center gap-[30px] hidden'>
 					<p className='text-[20px] hover:text-rose-500 transition-colors duration-300'>
 						<Link to='/'>Home</Link>

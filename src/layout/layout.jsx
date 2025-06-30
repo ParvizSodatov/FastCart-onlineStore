@@ -26,19 +26,14 @@ export default function Layout() {
 	}
   const dispatch=useDispatch()
   const location=useLocation()
-
-
   function handleSearch(e){
     setSearch(e.target.value)
     dispatch(searchProduct(e.target.value))
   }
-
   function LogOut(){
     localStorage.removeItem('token')
   }
-
 const token=localStorage.getItem('token')
-
    const [anchorEl2, setAnchorEl2] =useState(null);
   const open2 = Boolean(anchorEl2);
   const handleClickAcount = (event) => {
@@ -47,13 +42,10 @@ const token=localStorage.getItem('token')
   const handleCloseAcount = () => {
     setAnchorEl2(null);
   };
-
-
    let product = useSelector((store)=>store.wishlist.items)
 useEffect(()=>{
   dispatch(getCart())
 },[])
-
 	return (
 		<>
 			<nav className='fixed top-0 left-0 w-full z-50 bg-white shadow-md flex md:justify-around items-center py-4'>
@@ -187,7 +179,8 @@ useEffect(()=>{
     }
 
     
-    <div className='relative md:block hidden hover:text-rose-500 transition-colors duration-300'>
+   {
+    token && <div className='relative md:block hidden hover:text-rose-500 transition-colors duration-300'>
       <Link to='/wishlist'>
         <FavoriteBorderIcon style={{ fontSize: '30px' }} />
         {product != '' && product != null && product.length > 0 && (
@@ -197,6 +190,10 @@ useEffect(()=>{
         )}
       </Link>
     </div>
+   }
+   {
+    !token && <Link to='/LogIn'><Button variant="outlined">Log IN</Button></Link>
+   }
    
     <div className='relative md:hidden hover:text-rose-500 transition-colors duration-300'>
       <Link to='/wishlist'>

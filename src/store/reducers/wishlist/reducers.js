@@ -18,7 +18,8 @@ items:JSON.parse(localStorage.getItem('wishlist'))||[],
 		state.items=state.items.filter((item)=>item.id!=action.payload)
 		localStorage.setItem('wishlist',JSON.stringify(state.items))
 	  },
+
 	},
 })
-export const {setWishList,addWishList,removefromWishList}=wishlistStore.actions
+export const {setWishList,addWishList,removefromWishList,clearWishList}=wishlistStore.actions
 export default wishlistStore.reducer

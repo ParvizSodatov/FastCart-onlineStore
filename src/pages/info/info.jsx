@@ -68,7 +68,7 @@ export default function Info() {
 					</p>
 
 					{/* Размеры */}
-					<div className='flex flex-wrap gap-3 mt-6'>
+					{/* <div className='flex flex-wrap gap-3 mt-6'>
 						<span className='text-[20px] sm:text-[24px] font-medium'>Size:</span>
 						{['xs', 's', 'm', 'l', 'xl'].map((size) => (
 							<button
@@ -78,14 +78,13 @@ export default function Info() {
 								{size}
 							</button>
 						))}
-					</div>
-
+					</div> */}
 					{/* Кол-во */}
-					<div className='mt-6 flex gap-2'>
+					{/* <div className='mt-6 flex gap-2'>
 						<button className='border px-3 py-1 text-[18px]'>-</button>
 						<button className='border px-3 py-1 text-[18px]'>2</button>
 						<button className='bg-red-500 text-white border px-3 py-1 text-[18px]'>+</button>
-					</div>
+					</div> */}
 				</aside>
 			</section>
 		</div>

@@ -40,7 +40,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import Wishlist from '../wishlist/wishlist'
 export default function Home() {
 	const calculateTimeLeft = () => {
-		const targetDate = new Date('2025-07-01T00:00:00') // замени на нужную дату
+		const targetDate = new Date('2025-07-03T00:00:00') 
 		const now = new Date()
 		const difference = targetDate - now
 

@@ -49,9 +49,11 @@ export default function Layout() {
 	}
 
 	let product = useSelector(store => store.wishlist.items)
+	
 	useEffect(() => {
 		dispatch(getCart())
 	}, [])
+
 	return (
 		<>
 			<nav className='fixed top-0 left-0 w-full z-50 bg-white shadow-md flex md:justify-around items-center py-4'>

@@ -4,12 +4,18 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router'
 import DeleteIcon from '@mui/icons-material/Delete';
+
+
+
 export default function Cart() {
 	const dispatch = useDispatch()
 	const { cart } = useSelector(store => store.cart)
+
 	useEffect(() => {
 		dispatch(getCart())
 	}, [])
+
+	
 	return (
 		<>
 			<div className='ml-5 md:ml-[100px] mt-[60px] text-[28px] md:text-[30px]'>
